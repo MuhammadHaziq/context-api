@@ -17,6 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import AuthContext from "../context/AuthContext.js";
 
 const drawerWidth = 240;
 
@@ -85,8 +86,7 @@ const MainLayout = props => {
   const classes = useStyles();
   const theme = useTheme();
   const [state, setOpen] = React.useState({
-    open: true,
-    auth: true
+    open: false
   });
   // const [auth, setAuth] = React.useState(false);
   const handleDrawerOpen = () => {
@@ -96,98 +96,103 @@ const MainLayout = props => {
   const handleDrawerClose = () => {
     setOpen({ ...state, open: false });
   };
-  console.log(state);
-  return state.auth ? (
-    <React.Fragment>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="fixed"
-          className={clsx(classes.appBar, {
-            [classes.appBarShift]: state.open
-          })}
-        >
-          <Toolbar>
-            <IconButton
-              color="inherit"
-              onClick={handleDrawerOpen}
-              aria-label="Open drawer"
-              edge="start"
-              className={clsx(classes.menuButton, {
-                [classes.hide]: state.open
-              })}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" color="inherit" noWrap>
-              Mini variant drawer
-            </Typography>
-          </Toolbar>
-        </AppBar>
-        <Drawer
-          variant="permanent"
-          className={clsx(classes.drawer, {
-            [classes.drawerOpen]: state.open,
-            [classes.drawerClose]: !state.open
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: state.open,
-              [classes.drawerClose]: !state.open
-            })
-          }}
-          open={state.open}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
-          <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          // {props.children}
-          <Typography paragraph />
-          <Typography paragraph />
-        </main>
-      </div>
-    </React.Fragment>
-  ) : (
-    <React.Fragment>{props.children}</React.Fragment>
+  console.log(AuthContext.Consumer);
+  // state.auth ? (
+  return (
+    <AuthContext.Consumer>
+      {context =>
+        context.auth ? (
+          <React.Fragment>
+            <div className={classes.root}>
+              <CssBaseline />
+              <AppBar
+                position="fixed"
+                className={clsx(classes.appBar, {
+                  [classes.appBarShift]: state.open
+                })}
+              >
+                <Toolbar>
+                  <IconButton
+                    color="inherit"
+                    onClick={handleDrawerOpen}
+                    aria-label="Open drawer"
+                    edge="start"
+                    className={clsx(classes.menuButton, {
+                      [classes.hide]: state.open
+                    })}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                  <Typography variant="h6" color="inherit" noWrap>
+                    Mini variant drawer
+                  </Typography>
+                </Toolbar>
+              </AppBar>
+              <Drawer
+                variant="permanent"
+                className={clsx(classes.drawer, {
+                  [classes.drawerOpen]: state.open,
+                  [classes.drawerClose]: !state.open
+                })}
+                classes={{
+                  paper: clsx({
+                    [classes.drawerOpen]: state.open,
+                    [classes.drawerClose]: !state.open
+                  })
+                }}
+                open={state.open}
+              >
+                <div className={classes.toolbar}>
+                  <IconButton onClick={handleDrawerClose}>
+                    {theme.direction === "rtl" ? (
+                      <ChevronRightIcon />
+                    ) : (
+                      <ChevronLeftIcon />
+                    )}
+                  </IconButton>
+                </div>
+                <Divider />
+                <List>
+                  {["Inbox", "Starred", "Send email", "Drafts"].map(
+                    (text, index) => (
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    )
+                  )}
+                </List>
+                <Divider />
+                <List>
+                  {["All mail", "Trash", "Spam"].map((text, index) => (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ))}
+                </List>
+              </Drawer>
+              <main className={classes.content}>
+                <div className={classes.toolbar} />
+                {props.children}
+                <Typography paragraph />
+                <Typography paragraph />
+              </main>
+            </div>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>{props.children}</React.Fragment>
+        )
+      }
+    </AuthContext.Consumer>
   );
 };
-// : (
-//   return(
-//     <React.Fragment>
-//     {props.children}
-//     </React.Fragment>
-//   )
-// )
+// ) : (
+//   <React.Fragment>{props.children}</React.Fragment>
+// );
 
 export default MainLayout;

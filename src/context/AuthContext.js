@@ -4,7 +4,7 @@ const Intial_State = {
   auth: false
 };
 // const AuthContext = () => {
-export default React.createContext({ Intial_State });
+const AuthContext = React.createContext({ Intial_State });
 // };
 
-// export default AuthContext;
+export default AuthContext;

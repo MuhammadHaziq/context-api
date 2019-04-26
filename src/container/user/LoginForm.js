@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext.js";
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
@@ -41,69 +42,89 @@ const LoginForm = props => {
     document.body.style.background = "#bbdefb";
   }, []);
   return (
-    <Grid container direction="column" justify="center" alignItems="center">
-      <form className={classes.container} autoComplete="off">
-        <Grid container direction="column" justify="center" alignItems="center">
-          <Card className={classes.card}>
-            <CardActionArea>
-              <CardMedia
-                className={classes.media}
-                image="/static/images/cards/contemplative-reptile.jpg"
-                title="Contemplative Reptile"
-              />
-            </CardActionArea>
-
-            <CardContent>
-              <Input
-                id="outlined-email-input"
-                name={"email"}
-                type={"email"}
-                label={"Email"}
-                handleOnChange={handleOnChange()}
-              />
-              <Input
-                id="outlined-password-input"
-                name={"password"}
-                type={"password"}
-                label={"Password"}
-                handleOnChange={handleOnChange()}
-              />
-            </CardContent>
-            <CardActions>
+    <AuthContext.Consumer>
+      {context => (
+        <React.Fragment>
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+          >
+            <form
+              className={classes.container}
+              autoComplete="off"
+              onSubmit={context.Login}
+            >
               <Grid
                 container
-                direction="row"
-                justify="flex-end"
+                direction="column"
+                justify="center"
                 alignItems="center"
               >
-                <Button size="small" color="primary">
-                  Login
-                </Button>
-                <Button size="small" color="primary">
-                  Sign Up
-                </Button>
+                <Card className={classes.card}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image="/static/images/cards/contemplative-reptile.jpg"
+                      title="Contemplative Reptile"
+                    />
+                  </CardActionArea>
+
+                  <CardContent>
+                    <Input
+                      id="outlined-email-input"
+                      name={"email"}
+                      type={"email"}
+                      label={"Email"}
+                      handleOnChange={handleOnChange()}
+                    />
+                    <Input
+                      id="outlined-password-input"
+                      name={"password"}
+                      type={"password"}
+                      label={"Password"}
+                      handleOnChange={handleOnChange()}
+                    />
+                  </CardContent>
+                  <CardActions>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="flex-end"
+                      alignItems="center"
+                    >
+                      <Button type="submit" size="small" color="primary">
+                        Login
+                      </Button>
+                      <Button size="small" color="primary">
+                        Sign Up
+                      </Button>
+                    </Grid>
+                  </CardActions>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography
+                      paragraph
+                      className={classes.textLink}
+                      color="primary"
+                      // component={Link}
+                      // to="/forgotpassword"
+                    >
+                      Forget Password?
+                    </Typography>
+                  </Grid>
+                </Card>
               </Grid>
-            </CardActions>
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-            >
-              <Typography
-                paragraph
-                className={classes.textLink}
-                color="primary"
-                // component={Link}
-                // to="/forgotpassword"
-              >
-                Forget Password?
-              </Typography>
-            </Grid>
-          </Card>
-        </Grid>
-      </form>
-    </Grid>
+            </form>
+          </Grid>
+        </React.Fragment>
+      )}
+    </AuthContext.Consumer>
   );
 };
 LoginForm.propTypes = {
