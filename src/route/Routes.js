@@ -2,7 +2,7 @@ import React from "react";
 import MainLayout from "../components/MainLayout.js";
 import LoginForm from "../container/user/LoginForm.js";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import AuthContext from "../context/AuthContext.js";
+import StoreContext from "../context/StoreContext.js";
 const Routes = props => {
   const [state, setAuth] = React.useState({
     auth: false,
@@ -14,7 +14,7 @@ const Routes = props => {
     setAuth({ ...state, auth: true });
   };
   return (
-    <AuthContext.Provider value={{ ...state, Login }}>
+    <StoreContext>
       <React.Fragment>
         <BrowserRouter>
           <MainLayout>
@@ -29,7 +29,7 @@ const Routes = props => {
           </MainLayout>
         </BrowserRouter>
       </React.Fragment>
-    </AuthContext.Provider>
+    </StoreContext>
   );
 };
 
