@@ -12,7 +12,9 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext.js";
-import { Login } from "../../actions/authActions.js";
+import withContext from "../../context/ContextHOC.js";
+import * as ACTIONS from "../../actions/authActions";
+
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
@@ -30,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 }));
 const LoginForm = props => {
   const classes = useStyles();
-  const context = useContext(AuthContext);
+  // const context = useContext(AuthContext);
   const [values, setValues] = useState({
     email: "",
     password: ""
@@ -42,10 +44,9 @@ const LoginForm = props => {
 
   const Login = e => {
     e.preventDefault();
-    context.Login();
-    console.log(context);
+    props.context.dispatch(ACTIONS.Login());
   };
-  console.log(values);
+
   useEffect(() => {
     document.body.style.background = "#bbdefb";
   }, []);
@@ -129,4 +130,4 @@ const LoginForm = props => {
 LoginForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default LoginForm;
+export default withContext(LoginForm);
