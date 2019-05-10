@@ -14,6 +14,8 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../context/AuthContext.js";
 import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/authActions";
+import firebase from "../../firebase/Firebase.js";
+import { LOGIN_SUCCESS } from "../../actions/allActionTypes.js";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -42,9 +44,40 @@ const LoginForm = props => {
     setValues({ ...values, [name]: value });
   };
 
-  const Login = e => {
+  const Login = async e => {
     e.preventDefault();
-    props.context.dispatch(ACTIONS.Login());
+    try {
+      // const res = console.log(
+      //   await props.context.dispatch(
+      //     ACTIONS.Login(values.email, values.password)
+      //   )
+      // );
+      // console.log(res);
+      const res = await firebase
+        .auth()
+        .signInWithEmailAndPassword(values.email, values.password)
+        .then(response => {
+          console.log(response);
+          return { status: true, response: response.message };
+        })
+        .catch(error => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(error.message);
+          return { status: false, response: error.message };
+
+          // ...
+        });
+      if (res.status == true) {
+        //     console.log(res.response);
+        props.context.dispatch({ type: LOGIN_SUCCESS });
+        // props.context.dispatch(ACTIONS.Login(values.email, values.password));
+      } else {
+        console.log(res.response);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

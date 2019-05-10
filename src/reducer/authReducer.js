@@ -1,7 +1,7 @@
 import { LOGIN_SUCCESS } from "../actions/allActionTypes.js";
 
 const INITIAL_STATE = {
-  auth: false,
+  auth: false
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
