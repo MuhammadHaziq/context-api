@@ -15,7 +15,7 @@ import AuthContext from "../../context/AuthContext.js";
 import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/authActions";
 import firebase from "../../firebase/Firebase.js";
-import { LOGIN_SUCCESS } from "../../actions/allActionTypes.js";
+import { SIGNUP_SUCCESS, SIGNUP_FAIL } from "../../actions/allActionTypes.js";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -30,15 +30,9 @@ const useStyles = makeStyles(theme => ({
   media: {
     objectFit: "cover",
     height: "190px"
-  },
-  mainText: {
-    align: "center",
-    color: "primary",
-    gutterBottom: false,
-    variant: "h1"
   }
 }));
-const LoginForm = props => {
+const SignUpForm = props => {
   const classes = useStyles();
   // const context = useContext(AuthContext);
   const [values, setValues] = useState({
@@ -50,39 +44,31 @@ const LoginForm = props => {
     setValues({ ...values, [name]: value });
   };
 
-  const Login = async e => {
+  const Signup = async e => {
     e.preventDefault();
     try {
-      // const res = console.log(
-      //   await props.context.dispatch(
-      //     ACTIONS.Login(values.email, values.password)
-      //   )
-      // );
-      // console.log(res);
       const res = await firebase
         .auth()
-        .signInWithEmailAndPassword(values.email, values.password)
+        .createUserWithEmailAndPassword(values.email, values.password)
         .then(response => {
-          console.log(response);
           return { status: true, response: response.message };
+          // console.log(response);
         })
         .catch(error => {
+          // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
-          console.log(error.message);
           return { status: false, response: error.message };
 
           // ...
         });
       if (res.status == true) {
-        //     console.log(res.response);
-        props.context.dispatch({ type: LOGIN_SUCCESS });
-        // props.context.dispatch(ACTIONS.Login(values.email, values.password));
+        props.context.dispatch({ type: SIGNUP_SUCCESS });
       } else {
-        console.log(res.response);
+        props.context.dispatch({ type: SIGNUP_FAIL });
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.message);
     }
   };
 
@@ -94,7 +80,11 @@ const LoginForm = props => {
     // {context => (
     <React.Fragment>
       <Grid container direction="column" justify="center" alignItems="center">
-        <form className={classes.container} autoComplete="off" onSubmit={Login}>
+        <form
+          className={classes.container}
+          autoComplete="off"
+          onSubmit={Signup}
+        >
           <Grid
             container
             direction="column"
@@ -110,12 +100,12 @@ const LoginForm = props => {
 
               <CardContent>
                 <Typography
-                  variant="h5"
+                  variant="h6"
                   align="center"
                   color="primary"
                   gutterBottom
                 >
-                  Login
+                  Sign Up
                 </Typography>
                 <Input
                   id="outlined-email-input"
@@ -139,16 +129,16 @@ const LoginForm = props => {
                   justify="flex-end"
                   alignItems="center"
                 >
-                  <Button type="submit" size="small" color="primary">
-                    Login
-                  </Button>
                   <Button
                     type="button"
                     size="small"
                     color="primary"
                     component={Link}
-                    to="/Signup"
+                    to="/login"
                   >
+                    Login
+                  </Button>
+                  <Button type="submit" size="small" color="primary">
                     Sign Up
                   </Button>
                 </Grid>
@@ -158,17 +148,7 @@ const LoginForm = props => {
                 direction="row"
                 justify="center"
                 alignItems="center"
-              >
-                <Typography
-                  paragraph
-                  className={classes.textLink}
-                  color="primary"
-                  // component={Link}
-                  // to="/forgotpassword"
-                >
-                  Forget Password?
-                </Typography>
-              </Grid>
+              />
             </Card>
           </Grid>
         </form>
@@ -178,7 +158,7 @@ const LoginForm = props => {
     // </AuthContext.Consumer>
   );
 };
-LoginForm.propTypes = {
+SignUpForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default withContext(LoginForm);
+export default withContext(SignUpForm);

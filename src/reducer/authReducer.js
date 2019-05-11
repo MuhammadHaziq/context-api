@@ -1,4 +1,8 @@
-import { LOGIN_SUCCESS } from "../actions/allActionTypes.js";
+import {
+  LOGIN_SUCCESS,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAIL
+} from "../actions/allActionTypes.js";
 
 const INITIAL_STATE = {
   auth: false
@@ -6,11 +10,23 @@ const INITIAL_STATE = {
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case LOGIN_SUCCESS:
+    case LOGIN_SUCCESS: {
+      return {
+        ...state,
+        auth: true
+      };
+    }
+    case SIGNUP_SUCCESS: {
+      return {
+        ...state,
+        auth: true
+      };
+    }
+    case SIGNUP_FAIL:
       {
         return {
           ...state,
-          auth: true
+          auth: false
         };
       }
       break;

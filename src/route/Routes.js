@@ -1,6 +1,7 @@
 import React from "react";
 import MainLayout from "../components/MainLayout.js";
 import LoginForm from "../container/user/LoginForm.js";
+import SignUpForm from "../container/user/SignUpForm.js";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import StoreContext from "../context/StoreContext.js";
 const Routes = props => {
@@ -25,6 +26,7 @@ const Routes = props => {
                 component={() => <Redirect to="/login" />}
               />
               <Route exact path="/login" component={LoginForm} />
+              <Route exact path="/Signup" component={SignUpForm} />
             </Route>
           </MainLayout>
         </BrowserRouter>
