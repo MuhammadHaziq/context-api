@@ -52,38 +52,7 @@ const LoginForm = props => {
 
   const Login = async e => {
     e.preventDefault();
-    try {
-      // const res = console.log(
-      //   await props.context.dispatch(
-      //     ACTIONS.Login(values.email, values.password)
-      //   )
-      // );
-      // console.log(res);
-      const res = await firebase
-        .auth()
-        .signInWithEmailAndPassword(values.email, values.password)
-        .then(response => {
-          console.log(response);
-          return { status: true, response: response.message };
-        })
-        .catch(error => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.log(error.message);
-          return { status: false, response: error.message };
-
-          // ...
-        });
-      if (res.status == true) {
-        //     console.log(res.response);
-        props.context.dispatch({ type: LOGIN_SUCCESS });
-        // props.context.dispatch(ACTIONS.Login(values.email, values.password));
-      } else {
-        console.log(res.response);
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    ACTIONS.Login(props.context.dispatch, values.email, values.password);
   };
 
   useEffect(() => {

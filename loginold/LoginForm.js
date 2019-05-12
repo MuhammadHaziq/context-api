@@ -11,9 +11,11 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext.js";
 import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/authActions";
 import firebase from "../../firebase/Firebase.js";
+import { LOGIN_SUCCESS } from "../../actions/allActionTypes.js";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -28,9 +30,15 @@ const useStyles = makeStyles(theme => ({
   media: {
     objectFit: "cover",
     height: "190px"
+  },
+  mainText: {
+    align: "center",
+    color: "primary",
+    gutterBottom: false,
+    variant: "h1"
   }
 }));
-const SignUpForm = props => {
+const LoginForm = props => {
   const classes = useStyles();
   // const context = useContext(AuthContext);
   const [values, setValues] = useState({
@@ -42,9 +50,41 @@ const SignUpForm = props => {
     setValues({ ...values, [name]: value });
   };
 
-  const Signup = e => {
+  const Login = async e => {
     e.preventDefault();
-    ACTIONS.signup(props.context.dispatch, values.email, values.password);
+    // ACTIONS.Login(props.context.dispatch, values.email, values.password);
+    // try {
+    // const res = console.log(
+    //   await props.context.dispatch(
+    //     ACTIONS.Login(values.email, values.password)
+    //   )
+    // );
+    // console.log(res);
+    //     const res = await firebase
+    //       .auth()
+    //       .signInWithEmailAndPassword(values.email, values.password)
+    //       .then(response => {
+    //         console.log(response);
+    //         return { status: true, response: response.message };
+    //       })
+    //       .catch(error => {
+    //         var errorCode = error.code;
+    //         var errorMessage = error.message;
+    //         console.log(error.message);
+    //         return { status: false, response: error.message };
+    //
+    //         // ...
+    //       });
+    //     if (res.status == true) {
+    //       //     console.log(res.response);
+    //       props.context.dispatch({ type: LOGIN_SUCCESS });
+    //       // props.context.dispatch(ACTIONS.Login(values.email, values.password));
+    //     } else {
+    //       console.log(res.response);
+    //     }
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
   };
 
   useEffect(() => {
@@ -55,11 +95,7 @@ const SignUpForm = props => {
     // {context => (
     <React.Fragment>
       <Grid container direction="column" justify="center" alignItems="center">
-        <form
-          className={classes.container}
-          autoComplete="off"
-          onSubmit={Signup}
-        >
+        <form className={classes.container} autoComplete="off" onSubmit={Login}>
           <Grid
             container
             direction="column"
@@ -75,12 +111,12 @@ const SignUpForm = props => {
 
               <CardContent>
                 <Typography
-                  variant="h6"
+                  variant="h5"
                   align="center"
                   color="primary"
                   gutterBottom
                 >
-                  Sign Up
+                  Login
                 </Typography>
                 <Input
                   id="outlined-email-input"
@@ -104,16 +140,16 @@ const SignUpForm = props => {
                   justify="flex-end"
                   alignItems="center"
                 >
+                  <Button type="submit" size="small" color="primary">
+                    Login
+                  </Button>
                   <Button
                     type="button"
                     size="small"
                     color="primary"
                     component={Link}
-                    to="/login"
+                    to="/Signup"
                   >
-                    Login
-                  </Button>
-                  <Button type="submit" size="small" color="primary">
                     Sign Up
                   </Button>
                 </Grid>
@@ -123,7 +159,17 @@ const SignUpForm = props => {
                 direction="row"
                 justify="center"
                 alignItems="center"
-              />
+              >
+                <Typography
+                  paragraph
+                  className={classes.textLink}
+                  color="primary"
+                  // component={Link}
+                  // to="/forgotpassword"
+                >
+                  Forget Password?
+                </Typography>
+              </Grid>
             </Card>
           </Grid>
         </form>
@@ -133,7 +179,7 @@ const SignUpForm = props => {
     // </AuthContext.Consumer>
   );
 };
-SignUpForm.propTypes = {
+LoginForm.propTypes = {
   classes: PropTypes.object.isRequired
 };
-export default withContext(SignUpForm);
+export default withContext(LoginForm);

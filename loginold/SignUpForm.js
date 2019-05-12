@@ -11,9 +11,11 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
+import AuthContext from "../../context/AuthContext.js";
 import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/authActions";
 import firebase from "../../firebase/Firebase.js";
+import { SIGNUP_SUCCESS, SIGNUP_FAIL } from "../../actions/allActionTypes.js";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -42,9 +44,32 @@ const SignUpForm = props => {
     setValues({ ...values, [name]: value });
   };
 
-  const Signup = e => {
+  const Signup = async e => {
     e.preventDefault();
-    ACTIONS.signup(props.context.dispatch, values.email, values.password);
+    // try {
+    //   const res = await firebase
+    //     .auth()
+    //     .createUserWithEmailAndPassword(values.email, values.password)
+    //     .then(response => {
+    //       return { status: true, response: response.message };
+    //       // console.log(response);
+    //     })
+    //     .catch(error => {
+    //       // Handle Errors here.
+    //       var errorCode = error.code;
+    //       var errorMessage = error.message;
+    //       return { status: false, response: error.message };
+    //
+    //       // ...
+    //     });
+    //   if (res.status == true) {
+    //     props.context.dispatch({ type: SIGNUP_SUCCESS });
+    //   } else {
+    //     props.context.dispatch({ type: SIGNUP_FAIL });
+    //   }
+    // } catch (err) {
+    //   console.log(err.message);
+    // }
   };
 
   useEffect(() => {

@@ -1,7 +1,8 @@
 import {
   LOGIN_SUCCESS,
   SIGNUP_SUCCESS,
-  SIGNUP_FAIL
+  SIGNUP_FAIL,
+  LOGIN_FAIL
 } from "../actions/allActionTypes.js";
 
 const INITIAL_STATE = {
@@ -14,6 +15,12 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         auth: true
+      };
+    }
+    case LOGIN_FAIL: {
+      return {
+        ...state,
+        auth: false
       };
     }
     case SIGNUP_SUCCESS: {
