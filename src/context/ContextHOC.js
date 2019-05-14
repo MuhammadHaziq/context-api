@@ -6,11 +6,19 @@ import SnackBarMessage_Context from "./SnackBarMessage_Context.js";
 export default function withContext(Component) {
   return function contextComponent(props) {
     return (
-      // <SnackBarMessage_Context.Consumer>
-        <AuthContext.Consumer>
-          {context => <Component {...props} context={context} />}
-        </AuthContext.Consumer>
-      // </SnackBarMessage_Context.Consumer>
+      <SnackBarMessage_Context.Consumer>
+        {messageContext => (
+          <AuthContext.Consumer>
+            {context => (
+              <Component
+                {...props}
+                context={context}
+                message={messageContext}
+              />
+            )}
+          </AuthContext.Consumer>
+        )}
+      </SnackBarMessage_Context.Consumer>
     );
   };
 }

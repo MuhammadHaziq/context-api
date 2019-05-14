@@ -14,24 +14,21 @@ const StoreContext = props => {
     open: false,
     message: ""
   };
-  // // const Login = () => {//   console.log("login");
-  // //   dispatch({ type: LOGIN_SUCCESS });
-  // // };
-  // const Login = () => {
-  //   dispatch(ACTIONS.Login());
-  // };
-
   const [state, dispatch] = React.useReducer(authReducer, INITIAL_STATE);
-  // const [messageState, messageDispatch] = React.useReducer(
-  //   messageReducer,
-  //   Message_State
-  // );
+  const [messageState, messageDispatch] = React.useReducer(
+    messageReducer,
+    Message_State
+  );
 
   return (
     <React.Fragment>
+      <SnackBarMessage_Context.Provider
+        value={{ ...messageState, messageDispatch }}
+      >
         <AuthContext.Provider value={{ ...state, dispatch }}>
           {props.children}
         </AuthContext.Provider>
+      </SnackBarMessage_Context.Provider>
     </React.Fragment>
   );
 };

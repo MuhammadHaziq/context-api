@@ -16,7 +16,6 @@ import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/authActions";
 import firebase from "../../firebase/Firebase.js";
 import { LOGIN_SUCCESS } from "../../actions/allActionTypes.js";
-
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
@@ -40,6 +39,7 @@ const useStyles = makeStyles(theme => ({
 }));
 const LoginForm = props => {
   const classes = useStyles();
+  // console.log(props.message.messageDispatch);
   // const context = useContext(AuthContext);
   const [values, setValues] = useState({
     email: "",
@@ -52,7 +52,12 @@ const LoginForm = props => {
 
   const Login = async e => {
     e.preventDefault();
-    ACTIONS.Login(props.context.dispatch, values.email, values.password);
+    ACTIONS.Login(
+      props.context.dispatch,
+      values.email,
+      values.password,
+      props.message.messageDispatch
+    );
   };
 
   useEffect(() => {

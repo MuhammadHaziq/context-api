@@ -9,7 +9,7 @@ import {
 import firebase from "../firebase/Firebase.js";
 // var firebase = admin.database();
 
-export const Login = async (dispatch, email, password) => {
+export const Login = async (dispatch, email, password, messageDispatch) => {
   try {
     const res = await firebase
       .auth()
@@ -34,9 +34,9 @@ export const Login = async (dispatch, email, password) => {
         type: LOGIN_SUCCESS
       });
     } else {
-      dispatch({
+      messageDispatch({
         type: ERROR_MESSAGE,
-        message: res.response
+        response: res.response
       });
       // console.log(res.response);
     }
