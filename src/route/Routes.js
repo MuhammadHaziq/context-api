@@ -5,15 +5,6 @@ import SignUpForm from "../container/user/SignUpForm.js";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import StoreContext from "../context/StoreContext.js";
 const Routes = props => {
-  const [state, setAuth] = React.useState({
-    auth: false,
-    userName: "",
-    password: ""
-  });
-  const Login = e => {
-    e.preventDefault();
-    setAuth({ ...state, auth: true });
-  };
   return (
     <StoreContext>
       <React.Fragment>

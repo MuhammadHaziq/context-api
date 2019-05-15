@@ -1,4 +1,4 @@
-import React, { userState } from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -86,7 +86,7 @@ const useStyles = makeStyles(theme => ({
 const MainLayout = props => {
   const classes = useStyles();
   const theme = useTheme();
-  const [state, setOpen] = React.useState({
+  const [state, setOpen] = useState({
     open: false
   });
   // const [auth, setAuth] = React.useState(false);

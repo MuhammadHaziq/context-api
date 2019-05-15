@@ -2,10 +2,7 @@ import React from "react";
 import authReducer from "../reducer/authReducer.js";
 import messageReducer from "../reducer/messageReducer.js";
 import AuthContext from "./AuthContext.js";
-import * as ACTIONS from "../actions/authActions";
-import { LOGIN_SUCCESS } from "../actions/allActionTypes.js";
-// import { Login } from "../actions/authActions.js";
-import SnackBarMessage_Context from "./SnackBarMessage_Context.js";
+import SnackbarContext from "./SnackBarMessage_Context.js";
 const StoreContext = props => {
   const INITIAL_STATE = {
     auth: false
@@ -22,13 +19,11 @@ const StoreContext = props => {
 
   return (
     <React.Fragment>
-      <SnackBarMessage_Context.Provider
-        value={{ ...messageState, messageDispatch }}
-      >
+      <SnackbarContext.Provider value={{ ...messageState, messageDispatch }}>
         <AuthContext.Provider value={{ ...state, dispatch }}>
           {props.children}
         </AuthContext.Provider>
-      </SnackBarMessage_Context.Provider>
+      </SnackbarContext.Provider>
     </React.Fragment>
   );
 };

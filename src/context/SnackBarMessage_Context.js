@@ -4,6 +4,6 @@ const Intial_State = {
   open: false,
   message: ""
 };
-const SnackBarMessage_Context = React.createContext({ Intial_State });
+const SnackbarContext = React.createContext({ Intial_State });
 
-export default SnackBarMessage_Context;
+export default SnackbarContext;

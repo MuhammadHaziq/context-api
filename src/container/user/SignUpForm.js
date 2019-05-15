@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../../components/inputs/Input.js";
 import { makeStyles } from "@material-ui/core/styles";
-import PropTypes from "prop-types";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -13,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/authActions";
-import firebase from "../../firebase/Firebase.js";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   container: {

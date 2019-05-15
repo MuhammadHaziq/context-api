@@ -29,14 +29,12 @@ const authReducer = (state = INITIAL_STATE, action) => {
         auth: true
       };
     }
-    case SIGNUP_FAIL:
-      {
-        return {
-          ...state,
-          auth: false
-        };
-      }
-      break;
+    case SIGNUP_FAIL: {
+      return {
+        ...state,
+        auth: false
+      };
+    }
     default: {
       return {
         state
