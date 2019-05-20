@@ -6,7 +6,8 @@ import {
 } from "../actions/allActionTypes.js";
 
 const INITIAL_STATE = {
-  auth: false
+  auth: false,
+  user: ""
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -14,7 +15,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        auth: true
+        auth: true,
+        user: action.response
       };
     }
     case LOGIN_FAIL: {

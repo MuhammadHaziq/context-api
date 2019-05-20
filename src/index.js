@@ -5,6 +5,21 @@ import "./index.css";
 import Routes from "./route/Routes.js";
 import * as serviceWorker from "./serviceWorker";
 import StoreContext from "./context/StoreContext.js";
+import SetAuthorizeToken from "./utile/SetAuthorizeToken.js";
+import * as ACTIONS from "./actions/authActions";
+// import AuthContext from "./context/AuthContext.js";
+// import authReducer from "./reducer/authReducer.js";
+
+// const [state, dispatch] = React.useReducer(authReducer, INITIAL_STATE);
+// const INITIAL_STATE = {
+//   auth: false,
+//   user: ""
+// };
+if (localStorage.token) {
+  SetAuthorizeToken(localStorage.jwttoken);
+  // ACTIONS.setCurrentUser(dispatch, localStorage.jwttoken);
+}
+console.log(StoreContext);
 ReactDOM.render(
   <StoreContext>
     <Routes />

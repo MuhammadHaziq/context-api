@@ -7,9 +7,33 @@ import {
 } from "./allActionTypes.js";
 import firebase from "../firebase/Firebase.js";
 import jwt from "jsonwebtoken";
-// import fs from "fs";
-// var firebase = admin.database();
-// const privateKey = fs.readFileSync("private.key");
+import SetAuthorizeToken from "../utile/SetAuthorizeToken.js";
+
+export const setCurrentUser = async (dispatch, token) => {
+  const data = await jwt.decode(token);
+  console.log(data);
+  dispatch({
+    type: LOGIN_SUCCESS,
+    response: data
+  });
+};
+
+export const SetCurrentUser = token => {
+  const data = jwt.decode(token);
+  console.log(data);
+  return {
+    type: LOGIN_SUCCESS,
+    response: data
+  };
+};
+
+// export const genrateToken = async data => {
+//   const token = await jwt.sign(data, "MY_SECRET_KEY", { expiresIn: "1d" });
+//   localStorage.setItem("token", token);
+//   // console.log(token);
+//   return token;
+// };
+
 export const Login = async (dispatch, email, password, messageDispatch) => {
   try {
     const res = await firebase
@@ -21,34 +45,21 @@ export const Login = async (dispatch, email, password, messageDispatch) => {
           email: response.user.email
         };
         const token = jwt.sign(data, "MY_SECRET_KEY", { expiresIn: "1d" });
-        localStorage.setValue("token", token);
-        // console.log(data);
-        // console.log(response);
-        // console.log(response);
-        // return true;
-        return { status: true, response: response.message };
+        // const token = genrateToken(data);
+        console.log(token);
+        setCurrentUser(dispatch, token);
+        localStorage.setItem("token", token);
+        SetAuthorizeToken(token);
+
+        // props.location.replace("/home");
       })
       .catch(error => {
-        // Handle Errors here.
-        // var errorCode = error.code;
-        // var errorMessage = error.message;
-        console.log(error.message);
-        return { status: false, response: error.message };
-        // return false;
-        // ...
+        messageDispatch({
+          type: ERROR_MESSAGE,
+          response: error.message
+        });
+        // console.log(error.message);
       });
-    if (res.status === true) {
-      // console.log(res.response);
-      dispatch({
-        type: LOGIN_SUCCESS
-      });
-    } else {
-      messageDispatch({
-        type: ERROR_MESSAGE,
-        response: res.response
-      });
-      // console.log(res.response);
-    }
   } catch (err) {
     console.log(err);
   }

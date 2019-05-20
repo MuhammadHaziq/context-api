@@ -97,7 +97,8 @@ const MainLayout = props => {
   const handleDrawerClose = () => {
     setOpen({ ...state, open: false });
   };
-  console.log(AuthContext.Consumer);
+  // console.log(AuthContext.Consumer);
+  console.log(props);
   // state.auth ? (
   return (
     // <AuthContext.Consumer>

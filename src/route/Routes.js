@@ -4,6 +4,9 @@ import LoginForm from "../container/user/LoginForm.js";
 import SignUpForm from "../container/user/SignUpForm.js";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import StoreContext from "../context/StoreContext.js";
+import Home from "../container/Home.js";
+import RequireAuth from "../utile/RequireAuth.js";
+
 const Routes = props => {
   return (
     <StoreContext>
@@ -18,6 +21,7 @@ const Routes = props => {
               />
               <Route exact path="/login" component={LoginForm} />
               <Route exact path="/Signup" component={SignUpForm} />
+              <Route exact path="/home" component={RequireAuth(Home)} />
             </Route>
           </MainLayout>
         </BrowserRouter>
