@@ -18,9 +18,9 @@ const StoreContext = props => {
 
   const [state, dispatch] = React.useReducer(authReducer, INITIAL_STATE);
   // if (localStorage.token) {
-//   SetAuthorizeToken(localStorage.jwttoken);
-//   // ACTIONS.setCurrentUser(dispatch, localStorage.jwttoken);
-// }
+  //   SetAuthorizeToken(localStorage.token);
+  //   ACTIONS.setCurrentUser(dispatch, localStorage.token);
+  // }
 
   const [messageState, messageDispatch] = React.useReducer(
     messageReducer,

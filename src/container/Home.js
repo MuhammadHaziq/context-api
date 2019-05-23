@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
+import withContext from "../context/ContextHOC.js";
+import * as ACTIONS from "../actions/authActions";
 
 const Home = props => {
+  useLayoutEffect(() => {
+    if (localStorage.token) {
+      ACTIONS.setCurrentUser(props.context.dispatch, localStorage.token);
+    } else {
+      props.history.replace("/login");
+    }
+  }, []);
   return (
     <React.Fragment>
       <div>Home</div>
@@ -8,4 +17,4 @@ const Home = props => {
   );
 };
 
-export default Home;
+export default withContext(Home);

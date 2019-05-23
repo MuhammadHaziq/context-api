@@ -21,7 +21,7 @@ const Routes = props => {
               />
               <Route exact path="/login" component={LoginForm} />
               <Route exact path="/Signup" component={SignUpForm} />
-              <Route exact path="/home" component={RequireAuth(Home)} />
+              <Route exact path="/home" component={Home} />
             </Route>
           </MainLayout>
         </BrowserRouter>

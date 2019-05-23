@@ -19,7 +19,6 @@ if (localStorage.token) {
   SetAuthorizeToken(localStorage.jwttoken);
   // ACTIONS.setCurrentUser(dispatch, localStorage.jwttoken);
 }
-console.log(StoreContext);
 ReactDOM.render(
   <StoreContext>
     <Routes />
