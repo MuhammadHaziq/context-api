@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import Input from "../../components/inputs/Input.js";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -30,6 +30,11 @@ const useStyles = makeStyles(theme => ({
 }));
 const SignUpForm = props => {
   const classes = useStyles();
+  useLayoutEffect(() => {
+    if (localStorage.token) {
+      props.history.replace("/home");
+    }
+  }, []);
   // const context = useContext(AuthContext);
   const [values, setValues] = useState({
     email: "",
@@ -42,11 +47,19 @@ const SignUpForm = props => {
 
   const Signup = e => {
     e.preventDefault();
-    ACTIONS.signup(props.context.dispatch, values.email, values.password);
+    ACTIONS.signup(
+      props.context.dispatch,
+      values.email,
+      values.password,
+      props.message.messageDispatch
+    );
   };
 
   useEffect(() => {
     document.body.style.background = "#bbdefb";
+    return () => {
+      document.body.style.background = "";
+    };
   }, []);
   return (
     // <AuthContext.Consumer>
@@ -112,7 +125,7 @@ const SignUpForm = props => {
                     Login
                   </Button>
                   <Button type="submit" size="small" color="primary">
-                    Sign Up
+                    Submit
                   </Button>
                 </Grid>
               </CardActions>
