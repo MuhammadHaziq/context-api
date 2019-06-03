@@ -29,6 +29,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import ProfileDialog from "../container/user/ProfileDialog.js";
 import * as ACTIONS from "../actions/authActions.js";
 const drawerWidth = 240;
 
@@ -155,17 +156,24 @@ const MainLayout = props => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
+  // const [open, setOpenProifle] =
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [state, setOpen] = useState({
-    open: false
+    open: false,
+    openProfile: false
   });
   // const [auth, setAuth] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen({ ...state, open: true });
   };
 
+  const handleOpenProfile = () => {
+    setOpen({ ...state, openProfile: true });
+  };
+  const handleCloseProfile = () => {
+    setOpen({ ...state, openProfile: false });
+  };
   const handleDrawerClose = () => {
     setOpen({ ...state, open: false });
   };
@@ -192,7 +200,7 @@ const MainLayout = props => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   // console.log(AuthContext.Consumer);
-  // console.log(props);
+  console.log(state);
   // state.auth ? (
   const renderMenu = (
     <Menu
@@ -202,7 +210,13 @@ const MainLayout = props => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
+      state.openProfile === true ?{" "}
+      <ProfileDialog
+        open={state.openProfile}
+        closeProfile={handleCloseProfile}
+      />{" "}
+      : null
       <MenuItem onClick={LogOut}>Logout</MenuItem>
     </Menu>
   );
