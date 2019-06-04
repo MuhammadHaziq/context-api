@@ -3,6 +3,7 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAIL = "SIGNUP_FAIL";
 export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const UPDATE_USER_PROFILE = "UPDATE_USER_PROFILE";
 //  MessageReducer
 
 export const ERROR_MESSAGE = "ERROR_MESSAGE";

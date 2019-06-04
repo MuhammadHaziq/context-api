@@ -203,22 +203,22 @@ const MainLayout = props => {
   console.log(state);
   // state.auth ? (
   const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
-      state.openProfile === true ?{" "}
-      <ProfileDialog
-        open={state.openProfile}
-        closeProfile={handleCloseProfile}
-      />{" "}
-      : null
-      <MenuItem onClick={LogOut}>Logout</MenuItem>
-    </Menu>
+      <Menu
+        anchorEl={anchorEl}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
+        open={isMenuOpen}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
+        state.openProfile === true ?{" "}
+        <ProfileDialog
+          open={state.openProfile}
+          closeProfile={handleCloseProfile}
+        />{" "}
+        : null
+        <MenuItem onClick={LogOut}>Logout</MenuItem>
+      </Menu>
   );
 
   const renderMobileMenu = (

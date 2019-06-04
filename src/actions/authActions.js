@@ -4,7 +4,8 @@ import {
   SIGNUP_FAIL,
   ERROR_MESSAGE,
   SUCCESS_MESSAGE,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  UPDATE_USER_PROFILE
 } from "./allActionTypes.js";
 import firebase from "../firebase/Firebase.js";
 import jwt from "jsonwebtoken";
@@ -121,6 +122,39 @@ export const Logout = async (dispatch, messageDispatch) => {
         dispatch({
           type: LOGOUT_SUCCESS
         });
+      })
+      .catch(err => {
+        messageDispatch({
+          type: ERROR_MESSAGE,
+          response: err.message
+        });
+      });
+  } catch (err) {
+    messageDispatch({
+      type: ERROR_MESSAGE,
+      response: err.message
+    });
+  }
+};
+
+export const updateProfile = (data, dispatch, messageDispatch) => {
+  try {
+    const user = firebase.auth().currentUser;
+    console.log(data);
+    console.log(user);
+    user
+      .updateProfile({
+        displayName: data.name,
+        phoneNumber: data.phoneNumber
+      })
+      .then(response => {
+        // Update successful.
+        messageDispatch({
+          type: SUCCESS_MESSAGE,
+          response: "Profile Update SuccessFully"
+        });
+        // console.log(response);
+        // dispatch({ type: UPDATE_USER_PROFILE;
       })
       .catch(err => {
         messageDispatch({

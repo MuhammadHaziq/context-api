@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -9,20 +9,14 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import Input from "../../components/inputs/Input.js";
+import * as ACTIONS from "../../actions/authActions.js";
+import withContext from "../../context/ContextHOC.js";
 function ProfileDialog(props) {
   const [state, setProfile] = React.useState({
     userName: "",
     phoneNumber: "",
-    email: ""
+    userEmail: ""
   });
-  //
-  // function handleClickOpen() {
-  //   setOpen(true);
-  // }
-  //
-  // function handleClose() {
-  //   setOpen(false);
-  // }
   const handleOnChange = e => {
     const { name, value } = e.target;
     setProfile({ ...state, [name]: value });
@@ -30,64 +24,72 @@ function ProfileDialog(props) {
 
   const saveProfileData = e => {
     e.preventDefault();
-    console.log(state);
-  };
+    const data = {
+      name: state.userName,
+      phoneNumber: state.phoneNumber,
+      email: state.userEmail
+    };
+    console.log(data);
 
+    ACTIONS.updateProfile(
+      data,
+      props.context.dispatch,
+      props.message.messageDispatch
+    );
+  };
+  useEffect(() => {
+    if (state.userEmail == "") {
+      setProfile({ ...state, userEmail: props.context.user.email });
+    }
+  });
+  console.log(state.userEmail);
   return (
     <React.Fragment>
-      <Grid container direction="row" justify="flex-end" alignItems="center">
-        <Dialog
-          open={props.open}
-          onClose={props.closeProfile}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Update Your Profile</DialogTitle>
-          <form onSubmit={saveProfileData}>
-            <DialogContent>
-              <Input
-                autoFocus
-                id={"userName"}
-                label={"User Name"}
-                type={"text"}
-                handleOnChange={handleOnChange}
-                name={"userName"}
-              />
-              <Input
-                autoFocus
-                id={"userEmail"}
-                label={"User Email"}
-                type={"email"}
-                handleOnChange={handleOnChange}
-                name={"userEmail"}
-              />
-              <Input
-                autoFocus
-                id={"phoneNumber"}
-                label={"phone Number"}
-                type={"number"}
-                handleOnChange={handleOnChange}
-                name={"phoneNumber"}
-              />
-              <Input
-                autoFocus
-                id={"userName"}
-                label={"User Name"}
-                type={"text"}
-                handleOnChange={handleOnChange}
-                name={"userName"}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={props.closeProfile} color="primary">
-                Cancel
-              </Button>
-              <Button type="submit" color="primary">
-                Subscribe
-              </Button>
-            </DialogActions>
-          </form>
-        </Dialog>
-      </Grid>
+      <Dialog
+        open={props.open}
+        onClose={props.closeProfile}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Update Your Profile</DialogTitle>
+        <form onSubmit={saveProfileData}>
+          <DialogContent>
+            <Input
+              autoFocus
+              id={"userName"}
+              label={"User Name"}
+              type={"text"}
+              value={state.userName}
+              handleOnChange={handleOnChange}
+              name={"userName"}
+            />
+            <Input
+              id={"userEmail"}
+              label={"User Email"}
+              type={"email"}
+              value={state.userEmail}
+              handleOnChange={handleOnChange}
+              name={"userEmail"}
+            />
+            <Input
+              autoFocus
+              id={"phoneNumber"}
+              label={"phone Number"}
+              type={"number"}
+              value={state.phoneNumber}
+              handleOnChange={handleOnChange}
+              name={"phoneNumber"}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={props.closeProfile} color="primary">
+              Cancel
+            </Button>
+            <Button type="submit" color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </React.Fragment>
   );
 }
@@ -95,4 +97,13 @@ ProfileDialog.propTypes = {
   closeProfile: PropTypes.func.isRequired,
   open: PropTypes.bool
 };
-export default ProfileDialog;
+export default withContext(ProfileDialog);
+
+// <Input
+//   autoFocus
+//   id={"userName"}
+//   label={"User Name"}
+//   type={"text"}
+//   handleOnChange={handleOnChange}
+//   name={"userName"}
+// />

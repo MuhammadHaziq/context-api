@@ -39,7 +39,7 @@ const Input = props => {
       className={classes.textField}
       type={props.type}
       name={props.name}
-      // autoComplete="email"
+      value={props.value}
       onChange={props.handleOnChange}
       margin="normal"
       variant="outlined"
@@ -48,3 +48,4 @@ const Input = props => {
 };
 
 export default Input;
+// autoComplete="email"
