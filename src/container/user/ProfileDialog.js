@@ -9,6 +9,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import Input from "../../components/inputs/Input.js";
+import Date_Picker from "../../components/datePicker/Date_Picker.js";
 import * as ACTIONS from "../../actions/authActions.js";
 import withContext from "../../context/ContextHOC.js";
 function ProfileDialog(props) {
@@ -17,17 +18,23 @@ function ProfileDialog(props) {
     phoneNumber: "",
     userEmail: ""
   });
+  const [date, setDate] = React.useState({
+    dateofbirth: new Date()
+  });
   const handleOnChange = e => {
     const { name, value } = e.target;
     setProfile({ ...state, [name]: value });
   };
-
+  const handleDateChange = dateofbirth => {
+    setDate({ ...state, dateofbirth: dateofbirth });
+  };
   const saveProfileData = e => {
     e.preventDefault();
     const data = {
       name: state.userName,
       phoneNumber: state.phoneNumber,
-      email: state.userEmail
+      email: state.userEmail,
+      dateofbirth: date.dateofbirth
     };
     console.log(data);
 
@@ -39,10 +46,14 @@ function ProfileDialog(props) {
   };
   useEffect(() => {
     if (state.userEmail == "") {
-      setProfile({ ...state, userEmail: props.context.user.email });
+      setProfile({
+        ...state,
+        userEmail: props.context.user.email,
+        userName: props.context.user.displayName
+      });
     }
   });
-  console.log(state.userEmail);
+  console.log(props);
   return (
     <React.Fragment>
       <Dialog
@@ -78,6 +89,11 @@ function ProfileDialog(props) {
               value={state.phoneNumber}
               handleOnChange={handleOnChange}
               name={"phoneNumber"}
+            />
+            <Date_Picker
+              label={"Date Of Birth"}
+              selectedDate={date.dateofbirth}
+              handleDateChange={handleDateChange}
             />
           </DialogContent>
           <DialogActions>

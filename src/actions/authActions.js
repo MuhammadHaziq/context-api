@@ -140,19 +140,37 @@ export const Logout = async (dispatch, messageDispatch) => {
 export const updateProfile = (data, dispatch, messageDispatch) => {
   try {
     const user = firebase.auth().currentUser;
-    console.log(data);
-    console.log(user);
+    // console.log(user);
     user
       .updateProfile({
         displayName: data.name,
         phoneNumber: data.phoneNumber
       })
       .then(response => {
+        console.log(response);
         // Update successful.
-        messageDispatch({
-          type: SUCCESS_MESSAGE,
-          response: "Profile Update SuccessFully"
-        });
+        firebase
+          .database()
+          .ref("users/" + user.uid)
+          .set({
+            username: data.name,
+            email: data.email,
+            profile_picture: "",
+            dateofbirth: data.dateofbirth
+          })
+          .then(response => {
+            messageDispatch({
+              type: SUCCESS_MESSAGE,
+              response: "Profile Update SuccessFully"
+            });
+          })
+          .catch(err => {
+            messageDispatch({
+              type: ERROR_MESSAGE,
+              response: err.message
+            });
+          });
+
         // console.log(response);
         // dispatch({ type: UPDATE_USER_PROFILE;
       })
