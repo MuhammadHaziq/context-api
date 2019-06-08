@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -13,8 +14,22 @@ import Date_Picker from "../../components/datePicker/Date_Picker.js";
 import * as ACTIONS from "../../actions/authActions.js";
 import withContext from "../../context/ContextHOC.js";
 import dateFormat from "dateformat";
-import Avatar from "react-avatar-edit";
-function ProfileDialog(props) {
+import IconButton from "@material-ui/core/IconButton";
+import Avatar from "@material-ui/core/Avatar";
+import PhotoCamera from "@material-ui/icons/PhotoCamera";
+const useStyles = makeStyles({
+  avatar: {
+    margin: 10,
+    width: 60,
+    height: 60
+  },
+  input: {
+    display: "none"
+  }
+});
+const ProfileDialog = props => {
+  const classes = useStyles();
+
   const [state, setProfile] = React.useState({
     userName: "",
     phoneNumber: "",
@@ -28,10 +43,13 @@ function ProfileDialog(props) {
   });
   const handleOnChange = e => {
     const { name, value } = e.target;
-    setProfile({ ...state, [name]: value });
+    setProfile({ ...state, ...date, ...image, [name]: value });
   };
   const handleDateChange = dateofbirth => {
-    setDate({ ...state, dateofbirth: dateofbirth });
+    setDate({ ...state, ...image, dateofbirth: dateofbirth });
+  };
+  const handleOnChangeImage = file => {
+    setImage({ ...state, ...date, image: file });
   };
   const saveProfileData = e => {
     e.preventDefault();
@@ -49,13 +67,6 @@ function ProfileDialog(props) {
       props.message.messageDispatch
     );
   };
-  const onClose = () => {
-    // setImage({preview: null})
-  };
-
-  const onCrop = image => {
-    setImage({ image: image });
-  };
   useEffect(() => {
     if (state.userEmail == "") {
       setProfile({
@@ -65,7 +76,7 @@ function ProfileDialog(props) {
       });
     }
   });
-  console.log(props);
+  console.log(image);
   return (
     <React.Fragment>
       <Dialog
@@ -76,44 +87,69 @@ function ProfileDialog(props) {
         <DialogTitle id="form-dialog-title">Update Your Profile</DialogTitle>
         <form onSubmit={saveProfileData}>
           <DialogContent>
-            <Avatar
-              width={390}
-              height={295}
-              onCrop={onCrop}
-              onClose={onClose}
-              src={state.image}
-            />
-            <Input
-              autoFocus
-              id={"userName"}
-              label={"User Name"}
-              type={"text"}
-              value={state.userName}
-              handleOnChange={handleOnChange}
-              name={"userName"}
-            />
-            <Input
-              id={"userEmail"}
-              label={"User Email"}
-              type={"email"}
-              value={state.userEmail}
-              handleOnChange={handleOnChange}
-              name={"userEmail"}
-            />
-            <Input
-              autoFocus
-              id={"phoneNumber"}
-              label={"phone Number"}
-              type={"number"}
-              value={state.phoneNumber}
-              handleOnChange={handleOnChange}
-              name={"phoneNumber"}
-            />
-            <Date_Picker
-              label={"Date Of Birth"}
-              selectedDate={date.dateofbirth}
-              handleDateChange={handleDateChange}
-            />
+            <Grid
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+            >
+              <input
+                accept="image/*"
+                className={classes.input}
+                id="icon-button-file"
+                type="file"
+                name="image"
+                onChange={handleOnChangeImage}
+              />
+              <label htmlFor="icon-button-file">
+                <IconButton
+                  color="primary"
+                  className={classes.button}
+                  aria-label="Upload picture"
+                  component="span"
+                >
+                  <Avatar className={classes.avatar} src={state.image} />
+                </IconButton>
+              </label>
+            </Grid>
+            <Grid
+              container
+              direction="column"
+              justify="center"
+              alignItems="center"
+            >
+              <Input
+                autoFocus
+                id={"userName"}
+                label={"User Name"}
+                type={"text"}
+                value={state.userName}
+                handleOnChange={handleOnChange}
+                name={"userName"}
+              />
+              <Input
+                id={"userEmail"}
+                label={"User Email"}
+                type={"email"}
+                value={state.userEmail}
+                handleOnChange={handleOnChange}
+                name={"userEmail"}
+              />
+              <Input
+                autoFocus
+                id={"phoneNumber"}
+                label={"phone Number"}
+                type={"number"}
+                value={state.phoneNumber}
+                handleOnChange={handleOnChange}
+                name={"phoneNumber"}
+              />
+              <Date_Picker
+                label={"Date Of Birth"}
+                selectedDate={date.dateofbirth}
+                handleDateChange={handleDateChange}
+              />
+            </Grid>
           </DialogContent>
           <DialogActions>
             <Button onClick={props.closeProfile} color="primary">
@@ -127,7 +163,7 @@ function ProfileDialog(props) {
       </Dialog>
     </React.Fragment>
   );
-}
+};
 ProfileDialog.propTypes = {
   closeProfile: PropTypes.func.isRequired,
   open: PropTypes.bool
