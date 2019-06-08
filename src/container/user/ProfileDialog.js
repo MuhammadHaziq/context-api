@@ -12,6 +12,8 @@ import Input from "../../components/inputs/Input.js";
 import Date_Picker from "../../components/datePicker/Date_Picker.js";
 import * as ACTIONS from "../../actions/authActions.js";
 import withContext from "../../context/ContextHOC.js";
+import dateFormat from "dateformat";
+import Avatar from "react-avatar-edit";
 function ProfileDialog(props) {
   const [state, setProfile] = React.useState({
     userName: "",
@@ -20,6 +22,9 @@ function ProfileDialog(props) {
   });
   const [date, setDate] = React.useState({
     dateofbirth: new Date()
+  });
+  const [image, setImage] = React.useState({
+    image: ""
   });
   const handleOnChange = e => {
     const { name, value } = e.target;
@@ -34,7 +39,7 @@ function ProfileDialog(props) {
       name: state.userName,
       phoneNumber: state.phoneNumber,
       email: state.userEmail,
-      dateofbirth: date.dateofbirth
+      dateofbirth: dateFormat(date.dateofbirth, "dd-mm-yyyy")
     };
     console.log(data);
 
@@ -43,6 +48,13 @@ function ProfileDialog(props) {
       props.context.dispatch,
       props.message.messageDispatch
     );
+  };
+  const onClose = () => {
+    // setImage({preview: null})
+  };
+
+  const onCrop = image => {
+    setImage({ image: image });
   };
   useEffect(() => {
     if (state.userEmail == "") {
@@ -64,6 +76,13 @@ function ProfileDialog(props) {
         <DialogTitle id="form-dialog-title">Update Your Profile</DialogTitle>
         <form onSubmit={saveProfileData}>
           <DialogContent>
+            <Avatar
+              width={390}
+              height={295}
+              onCrop={onCrop}
+              onClose={onClose}
+              src={state.image}
+            />
             <Input
               autoFocus
               id={"userName"}

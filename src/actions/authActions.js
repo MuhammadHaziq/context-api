@@ -137,18 +137,23 @@ export const Logout = async (dispatch, messageDispatch) => {
   }
 };
 
-export const updateProfile = (data, dispatch, messageDispatch) => {
-  try {
-    const user = firebase.auth().currentUser;
-    // console.log(user);
-    user
-      .updateProfile({
-        displayName: data.name,
-        phoneNumber: data.phoneNumber
-      })
-      .then(response => {
-        console.log(response);
-        // Update successful.
+export const updateFunctionProfile = (
+  data,
+  dispatch,
+  messageDispatch,
+  value
+) => {
+  console.log(data);
+  const user = firebase.auth().currentUser;
+  user
+    .updateProfile({
+      displayName: data.name,
+      phoneNumber: data.phoneNumber
+    })
+    .then(response => {
+      // Update successful.
+      //  Search Data Exist or not
+      if (value == "exist") {
         firebase
           .database()
           .ref("users/" + user.uid)
@@ -156,6 +161,7 @@ export const updateProfile = (data, dispatch, messageDispatch) => {
             username: data.name,
             email: data.email,
             profile_picture: "",
+            phoneNumber: data.phoneNumber,
             dateofbirth: data.dateofbirth
           })
           .then(response => {
@@ -170,15 +176,59 @@ export const updateProfile = (data, dispatch, messageDispatch) => {
               response: err.message
             });
           });
+      } else {
+        firebase
+          .database()
+          .ref("users/" + user.uid)
+          .update({
+            username: data.name,
+            email: data.email,
+            profile_picture: "",
+            phoneNumber: data.phoneNumber,
+            dateofbirth: data.dateofbirth
+          })
+          .then(response => {
+            messageDispatch({
+              type: SUCCESS_MESSAGE,
+              response: "Profile Update SuccessFully"
+            });
+          })
+          .catch(err => {
+            messageDispatch({
+              type: ERROR_MESSAGE,
+              response: err.message
+            });
+          });
+      }
 
-        // console.log(response);
-        // dispatch({ type: UPDATE_USER_PROFILE;
-      })
-      .catch(err => {
-        messageDispatch({
-          type: ERROR_MESSAGE,
-          response: err.message
-        });
+      // console.log(response);
+      // dispatch({ type: UPDATE_USER_PROFILE;
+    })
+    .catch(err => {
+      messageDispatch({
+        type: ERROR_MESSAGE,
+        response: err.message
+      });
+    });
+  // ...
+};
+export const updateProfile = (data, dispatch, messageDispatch) => {
+  try {
+    const user = firebase.auth().currentUser;
+    // console.log(user);
+    firebase
+      .database()
+      .ref("/users/" + user.uid)
+      .once("value")
+      .then(snapshot => {
+        if (snapshot.val() === null) {
+          const value = "not exist";
+          updateFunctionProfile(data, dispatch, messageDispatch, value);
+        } else {
+          const value = "exist";
+          updateFunctionProfile(data, dispatch, messageDispatch, value);
+        }
+        console.log(snapshot.val());
       });
   } catch (err) {
     messageDispatch({

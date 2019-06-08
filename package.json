@@ -13,6 +13,7 @@
     "axios": "^0.18.0",
     "clsx": "^1.0.4",
     "date-fns": "^2.0.0-alpha.31",
+    "dateformat": "^3.0.3",
     "dayjs": "^1.8.14",
     "firebase": "^6.0.0",
     "firebase-admin": "^7.3.0",
@@ -23,6 +24,7 @@
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "react": "^16.8.6",
+    "react-avatar-edit": "^0.8.2",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8"
