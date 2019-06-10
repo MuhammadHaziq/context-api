@@ -20,8 +20,8 @@ import PhotoCamera from "@material-ui/icons/PhotoCamera";
 const useStyles = makeStyles({
   avatar: {
     margin: 10,
-    width: 60,
-    height: 60
+    width: 100,
+    height: 100
   },
   input: {
     display: "none"
@@ -49,7 +49,18 @@ const ProfileDialog = props => {
     setDate({ ...state, ...image, dateofbirth: dateofbirth });
   };
   const handleOnChangeImage = file => {
-    setImage({ ...state, ...date, image: file });
+    console.log(file.target.files[0]);
+    if (!file.target.files[0]) {
+      return false;
+    } else {
+      const reader = new FileReader();
+      const url = reader.readAsDataURL(file.target.files[0]);
+      // Call Back Function Execute after read file data
+      reader.onloadend = e => {
+        console.log(reader.result);
+        setImage({ ...state, ...date, image: reader.result });
+      };
+    }
   };
   const saveProfileData = e => {
     e.preventDefault();
@@ -57,7 +68,8 @@ const ProfileDialog = props => {
       name: state.userName,
       phoneNumber: state.phoneNumber,
       email: state.userEmail,
-      dateofbirth: dateFormat(date.dateofbirth, "dd-mm-yyyy")
+      dateofbirth: dateFormat(date.dateofbirth, "dd-mm-yyyy"),
+      image: image.image
     };
     console.log(data);
 
@@ -72,15 +84,25 @@ const ProfileDialog = props => {
       setProfile({
         ...state,
         userEmail: props.context.user.email,
-        userName: props.context.user.displayName
+        userName: props.context.user.username
       });
     }
+    //   const data = {
+    //     id: props.context.user.id
+    //   };
+    //   ACTIONS.get_User_Detail(
+    //     data,
+    //     props.context.dispatch,
+    //     props.message.messageDispatch
+    //   );
   });
-  console.log(image);
+
+  console.log(props.context.user.email);
   return (
     <React.Fragment>
       <Dialog
         open={props.open}
+        fullWidth={true}
         onClose={props.closeProfile}
         aria-labelledby="form-dialog-title"
       >
@@ -89,7 +111,7 @@ const ProfileDialog = props => {
           <DialogContent>
             <Grid
               container
-              direction="row"
+              direction="column"
               justify="center"
               alignItems="center"
             >
@@ -108,15 +130,19 @@ const ProfileDialog = props => {
                   aria-label="Upload picture"
                   component="span"
                 >
-                  <Avatar className={classes.avatar} src={state.image} />
+                  <Avatar
+                    className={classes.avatar}
+                    src={image.image ? image.image : "/images/profileImage.png"}
+                  />
                 </IconButton>
               </label>
             </Grid>
+
             <Grid
               container
               direction="column"
-              justify="center"
-              alignItems="center"
+              justify="flex-start"
+              alignItems="stretch"
             >
               <Input
                 autoFocus
@@ -126,6 +152,7 @@ const ProfileDialog = props => {
                 value={state.userName}
                 handleOnChange={handleOnChange}
                 name={"userName"}
+                isRequired
               />
               <Input
                 id={"userEmail"}
@@ -134,6 +161,7 @@ const ProfileDialog = props => {
                 value={state.userEmail}
                 handleOnChange={handleOnChange}
                 name={"userEmail"}
+                disabled
               />
               <Input
                 autoFocus

@@ -136,6 +136,31 @@ export const Logout = async (dispatch, messageDispatch) => {
     });
   }
 };
+export const get_User_Detail = (data, dispatch, messageDispatch) => {
+  try {
+    const user = firebase.auth().currentUser;
+    // console.log(user);
+    firebase
+      .database()
+      .ref("/users/" + user.uid)
+      .once("value")
+      .then(snapshot => {
+        if (snapshot.val() === null) {
+          const value = "not exist";
+          updateFunctionProfile(data, dispatch, messageDispatch, value);
+        } else {
+          const value = "exist";
+          updateFunctionProfile(data, dispatch, messageDispatch, value);
+        }
+        console.log(snapshot.val());
+      });
+  } catch (err) {
+    messageDispatch({
+      type: ERROR_MESSAGE,
+      response: err.message
+    });
+  }
+};
 
 export const updateFunctionProfile = (
   data,
@@ -148,7 +173,8 @@ export const updateFunctionProfile = (
   user
     .updateProfile({
       displayName: data.name,
-      phoneNumber: data.phoneNumber
+      phoneNumber: data.phoneNumber,
+      photoUrl: data.image
     })
     .then(response => {
       // Update successful.
@@ -162,7 +188,8 @@ export const updateFunctionProfile = (
             email: data.email,
             profile_picture: "",
             phoneNumber: data.phoneNumber,
-            dateofbirth: data.dateofbirth
+            dateofbirth: data.dateofbirth,
+            photoUrl: data.image
           })
           .then(response => {
             messageDispatch({
@@ -185,7 +212,8 @@ export const updateFunctionProfile = (
             email: data.email,
             profile_picture: "",
             phoneNumber: data.phoneNumber,
-            dateofbirth: data.dateofbirth
+            dateofbirth: data.dateofbirth,
+            photoUrl: data.image
           })
           .then(response => {
             messageDispatch({
