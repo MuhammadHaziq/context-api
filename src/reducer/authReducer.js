@@ -3,12 +3,14 @@ import {
   SIGNUP_SUCCESS,
   SIGNUP_FAIL,
   LOGIN_FAIL,
-  LOGOUT_SUCCESS
+  LOGOUT_SUCCESS,
+  CURRENT_USER_DETAIL
 } from "../actions/allActionTypes.js";
 
 const INITIAL_STATE = {
   auth: false,
-  user: ""
+  user: "",
+  userDetail: ""
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -42,7 +44,14 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case LOGOUT_SUCCESS: {
       return {
         auth: false,
-        user: ""
+        user: "",
+        userDetail: ""
+      };
+    }
+    case CURRENT_USER_DETAIL: {
+      return {
+        ...state,
+        userDetail: action.response
       };
     }
     default: {

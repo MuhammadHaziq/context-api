@@ -5,7 +5,8 @@ import {
   ERROR_MESSAGE,
   SUCCESS_MESSAGE,
   LOGOUT_SUCCESS,
-  UPDATE_USER_PROFILE
+  UPDATE_USER_PROFILE,
+  CURRENT_USER_DETAIL
 } from "./allActionTypes.js";
 import firebase from "../firebase/Firebase.js";
 import jwt from "jsonwebtoken";
@@ -136,6 +137,32 @@ export const Logout = async (dispatch, messageDispatch) => {
     });
   }
 };
+
+export const get_User_Current_Detail = (data, dispatch, messageDispatch) => {
+  try {
+    const user = firebase.auth().currentUser;
+    // console.log(user);
+    firebase
+      .database()
+      .ref("/users/" + data.id)
+      .once("value")
+      .then(snapshot => {
+        console.log(snapshot.val());
+        dispatch({ type: CURRENT_USER_DETAIL, response: snapshot.val() });
+      })
+      .catch(err => {
+        messageDispatch({
+          type: ERROR_MESSAGE,
+          response: err.message
+        });
+      });
+  } catch (err) {
+    messageDispatch({
+      type: ERROR_MESSAGE,
+      response: err.message
+    });
+  }
+};
 export const get_User_Detail = (data, dispatch, messageDispatch) => {
   try {
     const user = firebase.auth().currentUser;
@@ -186,7 +213,6 @@ export const updateFunctionProfile = (
           .set({
             username: data.name,
             email: data.email,
-            profile_picture: "",
             phoneNumber: data.phoneNumber,
             dateofbirth: data.dateofbirth,
             photoUrl: data.image
@@ -210,7 +236,6 @@ export const updateFunctionProfile = (
           .update({
             username: data.name,
             email: data.email,
-            profile_picture: "",
             phoneNumber: data.phoneNumber,
             dateofbirth: data.dateofbirth,
             photoUrl: data.image

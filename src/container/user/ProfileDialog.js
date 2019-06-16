@@ -80,24 +80,42 @@ const ProfileDialog = props => {
     );
   };
   useEffect(() => {
-    if (state.userEmail == "") {
+    const data = {
+      id: props.context.user.id
+    };
+    ACTIONS.get_User_Current_Detail(
+      data,
+      props.context.dispatch,
+      props.message.messageDispatch
+    );
+  }, []);
+
+  useEffect(
+    () => {
+      // if (
+      //   // props.context.userDetail.email !== "" &&
+      //   state.userEmail == "" &&
+      //   props.context.userDetail.email !== null
+      // ) {
       setProfile({
         ...state,
         userEmail: props.context.user.email,
-        userName: props.context.user.username
-      });
-    }
-    //   const data = {
-    //     id: props.context.user.id
-    //   };
-    //   ACTIONS.get_User_Detail(
-    //     data,
-    //     props.context.dispatch,
-    //     props.message.messageDispatch
-    //   );
-  });
+        userName: props.context.userDetail.username,
 
-  console.log(props.context.user.email);
+        phoneNumber: props.context.userDetail.phoneNumber
+      });
+
+      setImage({
+        image: props.context.userDetail.photoUrl
+      });
+      setDate({
+        dateofbirth: props.context.userDetail.dateofbirth
+      });
+      // }
+    },
+    [props.context.userDetail.email]
+  );
+
   return (
     <React.Fragment>
       <Dialog

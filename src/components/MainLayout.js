@@ -170,6 +170,7 @@ const MainLayout = props => {
 
   const handleOpenProfile = () => {
     setOpen({ ...state, openProfile: true });
+    
   };
   const handleCloseProfile = () => {
     setOpen({ ...state, openProfile: false });

@@ -9,7 +9,8 @@ import SetAuthorizeToken from "../utile/SetAuthorizeToken.js";
 const StoreContext = props => {
   const INITIAL_STATE = {
     auth: false,
-    user: ""
+    user: "",
+    userDetail: ""
   };
   const Message_State = {
     open: false,
