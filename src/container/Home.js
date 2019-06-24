@@ -11,16 +11,6 @@ const Home = props => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const data = {
-  //     id: props.context.user.id
-  //   };
-  //   ACTIONS.get_User_Current_Detail(
-  //     data,
-  //     props.context.dispatch,
-  //     props.message.messageDispatch
-  //   );
-  // }, []);
   return (
     <React.Fragment>
       <div>Home</div>

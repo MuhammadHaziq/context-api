@@ -92,16 +92,10 @@ const ProfileDialog = props => {
 
   useEffect(
     () => {
-      // if (
-      //   // props.context.userDetail.email !== "" &&
-      //   state.userEmail == "" &&
-      //   props.context.userDetail.email !== null
-      // ) {
       setProfile({
         ...state,
         userEmail: props.context.user.email,
         userName: props.context.userDetail.username,
-
         phoneNumber: props.context.userDetail.phoneNumber
       });
 
