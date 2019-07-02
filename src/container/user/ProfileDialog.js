@@ -68,7 +68,7 @@ const ProfileDialog = props => {
       name: state.userName,
       phoneNumber: state.phoneNumber,
       email: state.userEmail,
-      dateofbirth: dateFormat(date.dateofbirth, "dd-mm-yyyy"),
+      dateofbirth: dateFormat(date.dateofbirth, "dd/mm/yyyy"),
       image: image.image
     };
     console.log(data);
@@ -79,16 +79,16 @@ const ProfileDialog = props => {
       props.message.messageDispatch
     );
   };
-  useEffect(() => {
-    const data = {
-      id: props.context.user.id
-    };
-    ACTIONS.get_User_Current_Detail(
-      data,
-      props.context.dispatch,
-      props.message.messageDispatch
-    );
-  }, []);
+  // useEffect(() => {
+  //   const data = {
+  //     id: props.context.user.id
+  //   };
+  //   ACTIONS.get_User_Current_Detail(
+  //     data,
+  //     props.context.dispatch,
+  //     props.message.messageDispatch
+  //   );
+  // }, []);
 
   useEffect(
     () => {
@@ -107,9 +107,10 @@ const ProfileDialog = props => {
       });
       // }
     },
-    [props.context.userDetail.email]
+    [props.context.userDetail.email || ""]
   );
 
+  console.log(props.context.userDetail);
   return (
     <React.Fragment>
       <Dialog

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -31,6 +31,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import ProfileDialog from "../container/user/ProfileDialog.js";
 import * as ACTIONS from "../actions/authActions.js";
+import Avatar from "@material-ui/core/Avatar";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -148,6 +150,11 @@ const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3)
+  },
+  avatar: {
+    margin: 10,
+    width: 100,
+    height: 100
   }
 }));
 
@@ -163,6 +170,9 @@ const MainLayout = props => {
     open: false,
     openProfile: false
   });
+  const [image, setImage] = React.useState({
+    image: ""
+  });
   // const [auth, setAuth] = React.useState(false);
   const handleDrawerOpen = () => {
     setOpen({ ...state, open: true });
@@ -170,7 +180,6 @@ const MainLayout = props => {
 
   const handleOpenProfile = () => {
     setOpen({ ...state, openProfile: true });
-    
   };
   const handleCloseProfile = () => {
     setOpen({ ...state, openProfile: false });
@@ -200,26 +209,65 @@ const MainLayout = props => {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+  // useEffect(() => {
+  //   const data = {
+  //     id: props.context.user.id
+  //   };
+  //   ACTIONS.get_User_Current_Detail(
+  //     data,
+  //     props.context.dispatch,
+  //     props.message.messageDispatch
+  //   );
+  // }, []);
+
+  useEffect(
+    () => {
+      console.log(props.context.user.id);
+      const data = {
+        id: props.context.user.id
+      };
+      // props.context.user.id && props.context.user.id.length !== 0
+      // ?
+      if (props.context.user.id && props.context.user.id.length !== 0) {
+        ACTIONS.get_User_Current_Detail(
+          data,
+          props.context.dispatch,
+          props.message.messageDispatch
+        );
+      }
+
+      // : "";
+    },
+    [props.context.user.id && props.context.user.id.length !== 0]
+  );
+  useEffect(
+    () => {
+      setImage({
+        image: props.context.userDetail.photoUrl
+      });
+    },
+    [props.context.userDetail.photoUrl]
+  );
   // console.log(AuthContext.Consumer);
-  console.log(state);
+  console.log(props.context);
   // state.auth ? (
   const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMenuOpen}
-        onClose={handleMenuClose}
-      >
-        <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
-        state.openProfile === true ?{" "}
-        <ProfileDialog
-          open={state.openProfile}
-          closeProfile={handleCloseProfile}
-        />{" "}
-        : null
-        <MenuItem onClick={LogOut}>Logout</MenuItem>
-      </Menu>
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleOpenProfile}>Profile</MenuItem>
+      state.openProfile === true ?{" "}
+      <ProfileDialog
+        open={state.openProfile}
+        closeProfile={handleCloseProfile}
+      />{" "}
+      : null
+      <MenuItem onClick={LogOut}>Logout</MenuItem>
+    </Menu>
   );
 
   const renderMobileMenu = (
@@ -315,6 +363,12 @@ const MainLayout = props => {
                     onClick={handleProfileMenuOpen}
                     color="inherit"
                   >
+                    {/*}<Avatar
+                      className={classes.avatar}
+                      src={
+                        image.image ? image.image : "/images/profileImage.png"
+                      }
+                    />*/}
                     <AccountCircle />
                   </IconButton>
                 </div>
