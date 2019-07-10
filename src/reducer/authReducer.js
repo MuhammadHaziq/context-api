@@ -4,17 +4,25 @@ import {
   SIGNUP_FAIL,
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
-  CURRENT_USER_DETAIL
+  CURRENT_USER_DETAIL,
+  LOADER
 } from "../actions/allActionTypes.js";
 
 const INITIAL_STATE = {
   auth: false,
   user: "",
-  userDetail: ""
+  userDetail: "",
+  loader: false
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOADER: {
+      return {
+        ...state,
+        loader: action.response
+      };
+    }
     case LOGIN_SUCCESS: {
       return {
         ...state,

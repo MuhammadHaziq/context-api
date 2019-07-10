@@ -70,8 +70,12 @@ const LoginForm = props => {
       document.body.style.background = "";
     };
   }, []);
+  if (props.context.loader == true) {
+    return "Hello";
+  }
   return (
     // <AuthContext.Consumer>
+
     // {context => (
     <React.Fragment>
       <Grid container direction="column" justify="center" alignItems="center">

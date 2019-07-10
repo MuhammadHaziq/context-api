@@ -3,7 +3,8 @@ import React from "react";
 const Intial_State = {
   auth: false,
   user: "",
-  userDetail: ""
+  userDetail: "",
+  loader: false
 };
 const AuthContext = React.createContext({ Intial_State });
 

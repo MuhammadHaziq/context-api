@@ -6,7 +6,8 @@ import {
   SUCCESS_MESSAGE,
   LOGOUT_SUCCESS,
   UPDATE_USER_PROFILE,
-  CURRENT_USER_DETAIL
+  CURRENT_USER_DETAIL,
+  LOADER
 } from "./allActionTypes.js";
 import firebase from "../firebase/Firebase.js";
 import jwt from "jsonwebtoken";
@@ -14,10 +15,15 @@ import SetAuthorizeToken from "../utile/SetAuthorizeToken.js";
 
 export const setCurrentUser = async (dispatch, token) => {
   const data = await jwt.decode(token);
-  console.log(data);
+  // console.log(data);
   dispatch({
     type: LOGIN_SUCCESS,
     response: data
+  });
+
+  dispatch({
+    type: LOADER,
+    response: false
   });
 };
 
@@ -30,7 +36,7 @@ export const setCurrentSignUpUser = async (dispatch, token) => {
 };
 export const SetCurrentUser = token => {
   const data = jwt.decode(token);
-  console.log(data);
+  // console.log(data);
   return {
     type: LOGIN_SUCCESS,
     response: data
@@ -50,13 +56,17 @@ export const Login = async (dispatch, email, password, messageDispatch) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(response => {
+        dispatch({
+          type: LOADER,
+          response: true
+        });
         const data = {
           id: response.user.uid,
           email: response.user.email
         };
         const token = jwt.sign(data, "MY_SECRET_KEY", { expiresIn: "1d" });
         // const token = genrateToken(data);
-        console.log(token);
+        // console.log(token);
         setCurrentUser(dispatch, token);
         localStorage.setItem("token", token);
         SetAuthorizeToken(token);
@@ -142,13 +152,25 @@ export const get_User_Current_Detail = (data, dispatch, messageDispatch) => {
   try {
     const user = firebase.auth().currentUser;
     // console.log(user);
+    dispatch({
+      type: LOADER,
+      response: true
+    });
     firebase
       .database()
       .ref("/users/" + data.id)
       .once("value")
       .then(snapshot => {
         console.log(snapshot.val());
-        dispatch({ type: CURRENT_USER_DETAIL, response: snapshot.val() });
+        dispatch({
+          type: LOADER,
+          response: false
+        });
+        if (snapshot.val() == null) {
+          dispatch({ type: CURRENT_USER_DETAIL, response: "" });
+        } else {
+          dispatch({ type: CURRENT_USER_DETAIL, response: snapshot.val() });
+        }
       })
       .catch(err => {
         messageDispatch({

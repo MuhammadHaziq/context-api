@@ -152,10 +152,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
   },
   avatar: {
-    margin: 10,
-    width: 100,
-    height: 100
-  }
+      margin: -4,
+    },
 }));
 
 const MainLayout = props => {
@@ -222,13 +220,13 @@ const MainLayout = props => {
 
   useEffect(
     () => {
-      console.log(props.context.user.id);
-      const data = {
-        id: props.context.user.id
-      };
       // props.context.user.id && props.context.user.id.length !== 0
       // ?
       if (props.context.user.id && props.context.user.id.length !== 0) {
+        console.log(props.context.user.id);
+        const data = {
+          id: props.context.user.id
+        };
         ACTIONS.get_User_Current_Detail(
           data,
           props.context.dispatch,
@@ -246,11 +244,12 @@ const MainLayout = props => {
         image: props.context.userDetail.photoUrl
       });
     },
-    [props.context.userDetail.photoUrl]
+    [!props.context.userDetail]
   );
   // console.log(AuthContext.Consumer);
   console.log(props.context);
   // state.auth ? (
+
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -302,7 +301,9 @@ const MainLayout = props => {
       </MenuItem>
     </Menu>
   );
-
+  if (props.context.loader == true) {
+    return "Hello";
+  }
   return (
     // <AuthContext.Consumer>
     //   {context =>
@@ -369,7 +370,13 @@ const MainLayout = props => {
                         image.image ? image.image : "/images/profileImage.png"
                       }
                     />*/}
-                    <AccountCircle />
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={
+                        image.image ? image.image : "/images/profileImage.png"
+                      }
+                      className={classes.avatar}
+                    />
                   </IconButton>
                 </div>
                 <div className={classes.sectionMobile}>
