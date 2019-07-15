@@ -69,9 +69,9 @@ const ProfileDialog = props => {
       phoneNumber: state.phoneNumber,
       email: state.userEmail,
       dateofbirth: dateFormat(date.dateofbirth, "dd/mm/yyyy"),
-      image: image.image
+      image: !image.image ? '' : image.image
     };
-    console.log(data);
+    // console.log(data);
 
     ACTIONS.updateProfile(
       data,

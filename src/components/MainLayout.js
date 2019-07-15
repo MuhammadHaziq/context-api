@@ -165,7 +165,7 @@ const MainLayout = props => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [state, setOpen] = useState({
-    open: false,
+    open: true,
     openProfile: false
   });
   const [image, setImage] = React.useState({
@@ -364,12 +364,6 @@ const MainLayout = props => {
                     onClick={handleProfileMenuOpen}
                     color="inherit"
                   >
-                    {/*}<Avatar
-                      className={classes.avatar}
-                      src={
-                        image.image ? image.image : "/images/profileImage.png"
-                      }
-                    />*/}
                     <Avatar
                       alt="Remy Sharp"
                       src={
@@ -407,15 +401,19 @@ const MainLayout = props => {
             }}
             open={state.open}
           >
-            <div className={classes.toolbar}>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === "rtl" ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </div>
+          {/*Drawer Close Code Copay Paste From Bottom*/}
+<div className={classes.toolbar}  style={{justifyContent:"flex-start", marginLeft:'5px'}} >
+  <Avatar
+    alt="Remy Sharp"
+    src={
+      image.image ? image.image : "/images/profileImage.png"
+    }
+    className={classes.avatar}
+  />
+<Typography variant="h9" style={{justifyContent:'flex-center' , marginLeft:'10px'}}>
+{props.context.userDetail.username?props.context.userDetail.username:"UnKnown"}
+</Typography>
+</div>
             <Divider />
             <List>
               {["Inbox", "Starred", "Send email", "Drafts"].map(
@@ -465,3 +463,12 @@ const MainLayout = props => {
 // );
 
 export default withContext(MainLayout);
+// <div className={classes.toolbar}>
+//   // <IconButton onClick={handleDrawerClose}>
+//   //   {theme.direction === "rtl" ? (
+//   //     <ChevronRightIcon />
+//   //   ) : (
+//   //     <ChevronLeftIcon />
+//   //   )}
+//   // </IconButton>
+// </div>
