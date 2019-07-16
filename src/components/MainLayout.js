@@ -32,8 +32,8 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import ProfileDialog from "../container/user/ProfileDialog.js";
 import * as ACTIONS from "../actions/authActions.js";
 import Avatar from "@material-ui/core/Avatar";
-
-const drawerWidth = 240;
+import FriendsList from "../container/friends/FriendsList.js"
+const drawerWidth = 360;
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -402,7 +402,7 @@ const MainLayout = props => {
             open={state.open}
           >
           {/*Drawer Close Code Copay Paste From Bottom*/}
-<div className={classes.toolbar}  style={{justifyContent:"flex-start", marginLeft:'5px'}} >
+<div className={classes.toolbar}  style={{justifyContent:"flex-start", marginLeft:'5px' , minHeight:'80px'}} >
   <Avatar
     alt="Remy Sharp"
     src={
@@ -415,18 +415,8 @@ const MainLayout = props => {
 </Typography>
 </div>
             <Divider />
-            <List>
-              {["Inbox", "Starred", "Send email", "Drafts"].map(
-                (text, index) => (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                )
-              )}
-            </List>
+<FriendsList />
+
             <Divider />
             <List>
               {["All mail", "Trash", "Spam"].map((text, index) => (
