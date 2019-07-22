@@ -1,7 +1,7 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import withContext from "../context/ContextHOC.js";
 import * as ACTIONS from "../actions/authActions";
-
+import Message from "./messages/Message.js";
 const Home = props => {
   useLayoutEffect(() => {
     if (localStorage.token) {
@@ -11,9 +11,11 @@ const Home = props => {
     }
   }, []);
 
+  console.log(props.chat.show);
+  console.log(props);
   return (
     <React.Fragment>
-      <div>Home</div>
+      {props.chat.show == true ? <Message /> : <div>Hello Home</div>}
     </React.Fragment>
   );
 };

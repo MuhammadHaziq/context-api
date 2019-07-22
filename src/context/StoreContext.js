@@ -5,7 +5,8 @@ import AuthContext from "./AuthContext.js";
 import SnackbarContext from "./SnackBarMessage_Context.js";
 import * as ACTIONS from "../actions/authActions";
 import SetAuthorizeToken from "../utile/SetAuthorizeToken.js";
-
+import chatReducer from "../reducer/chatReducer.js";
+import ChatContext from "./ChatContext.js";
 const StoreContext = props => {
   const INITIAL_STATE = {
     auth: false,
@@ -17,7 +18,11 @@ const StoreContext = props => {
     open: false,
     message: ""
   };
-
+  const Chat_State = {
+    show: false,
+    message: [],
+    email: ""
+  };
   const [state, dispatch] = React.useReducer(authReducer, INITIAL_STATE);
   // if (localStorage.token) {
   //   SetAuthorizeToken(localStorage.token);
@@ -28,14 +33,17 @@ const StoreContext = props => {
     messageReducer,
     Message_State
   );
+  const [chatState, chatDispatch] = React.useReducer(chatReducer, Chat_State);
 
   return (
     <React.Fragment>
-      <SnackbarContext.Provider value={{ ...messageState, messageDispatch }}>
-        <AuthContext.Provider value={{ ...state, dispatch }}>
-          {props.children}
-        </AuthContext.Provider>
-      </SnackbarContext.Provider>
+      <ChatContext.Provider value={{ ...chatState, chatDispatch }}>
+        <SnackbarContext.Provider value={{ ...messageState, messageDispatch }}>
+          <AuthContext.Provider value={{ ...state, dispatch }}>
+            {props.children}
+          </AuthContext.Provider>
+        </SnackbarContext.Provider>
+      </ChatContext.Provider>
     </React.Fragment>
   );
 };

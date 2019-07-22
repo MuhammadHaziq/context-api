@@ -17,6 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
+import Button from "@material-ui/core/Button";
 import AuthContext from "../context/AuthContext.js";
 import SnackBarMessages from "./message/SnackBarMessages.js";
 import withContext from "../context/ContextHOC.js";
@@ -32,7 +33,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import ProfileDialog from "../container/user/ProfileDialog.js";
 import * as ACTIONS from "../actions/authActions.js";
 import Avatar from "@material-ui/core/Avatar";
-import FriendsList from "../container/friends/FriendsList.js"
+import FriendsList from "../container/friends/FriendsList.js";
 const drawerWidth = 360;
 
 const useStyles = makeStyles(theme => ({
@@ -152,8 +153,11 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(3)
   },
   avatar: {
-      margin: -4,
-    },
+    margin: -4,
+    marginLeft: "10px",
+
+  },
+
 }));
 
 const MainLayout = props => {
@@ -218,34 +222,28 @@ const MainLayout = props => {
   //   );
   // }, []);
 
-  useEffect(
-    () => {
-      // props.context.user.id && props.context.user.id.length !== 0
-      // ?
-      if (props.context.user.id && props.context.user.id.length !== 0) {
-        console.log(props.context.user.id);
-        const data = {
-          id: props.context.user.id
-        };
-        ACTIONS.get_User_Current_Detail(
-          data,
-          props.context.dispatch,
-          props.message.messageDispatch
-        );
-      }
+  useEffect(() => {
+    // props.context.user.id && props.context.user.id.length !== 0
+    // ?
+    if (props.context.user.id && props.context.user.id.length !== 0) {
+      console.log(props.context.user.id);
+      const data = {
+        id: props.context.user.id
+      };
+      ACTIONS.get_User_Current_Detail(
+        data,
+        props.context.dispatch,
+        props.message.messageDispatch
+      );
+    }
 
-      // : "";
-    },
-    [props.context.user.id && props.context.user.id.length !== 0]
-  );
-  useEffect(
-    () => {
-      setImage({
-        image: props.context.userDetail.photoUrl
-      });
-    },
-    [!props.context.userDetail]
-  );
+    // : "";
+  }, [props.context.user.id && props.context.user.id.length !== 0]);
+  useEffect(() => {
+    setImage({
+      image: props.context.userDetail.photoUrl
+    });
+  }, [!props.context.userDetail]);
   // console.log(AuthContext.Consumer);
   console.log(props.context);
   // state.auth ? (
@@ -330,9 +328,7 @@ const MainLayout = props => {
                 >
                   <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" color="inherit" noWrap>
-                  Mini variant drawer
-                </Typography>
+
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <SearchIcon />
@@ -401,21 +397,33 @@ const MainLayout = props => {
             }}
             open={state.open}
           >
-          {/*Drawer Close Code Copay Paste From Bottom*/}
-<div className={classes.toolbar}  style={{justifyContent:"flex-start", marginLeft:'5px' , minHeight:'80px'}} >
-  <Avatar
-    alt="Remy Sharp"
-    src={
-      image.image ? image.image : "/images/profileImage.png"
-    }
-    className={classes.avatar}
-  />
-<Typography variant="h9" style={{justifyContent:'flex-center' , marginLeft:'10px'}}>
-{props.context.userDetail.username?props.context.userDetail.username:"UnKnown"}
-</Typography>
-</div>
+            {/*Drawer Close Code Copay Paste From Bottom*/}
+            <div
+              className={classes.toolbar}
+              style={{
+                justifyContent: "flex-start",
+
+                backgroundColor: '#3f51b5',
+                color:'white'
+                // minHeight: "80px"
+              }}
+            >
+              <Avatar
+                alt="Remy Sharp"
+                src={image.image ? image.image : "/images/profileImage.png"}
+                className={classes.avatar}
+              />
+              <Typography
+                variant="h9"
+                style={{ justifyContent: "flex-center", marginLeft: "10px" }}
+              >
+                {props.context.userDetail.username
+                  ? props.context.userDetail.username
+                  : "UnKnown"}
+              </Typography>
+            </div>
             <Divider />
-<FriendsList />
+            <FriendsList />
 
             <Divider />
             <List>
