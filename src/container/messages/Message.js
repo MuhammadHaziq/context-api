@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react"
-import withContext from "../../context/ContextHOC.js";
-import * as ACTIONS from "../../actions/chatAction";
-const Message = (props) => {
+import React, { useEffect, useState } from 'react'
+import withContext from '../../context/ContextHOC.js'
+import * as ACTIONS from '../../actions/chatAction'
+const Message = props => {
   console.log(props)
-  return (
-    <div>Hello</div>
-  )
+  return <div>{props.context.user.id}</div>
 }
 export default withContext(Message)

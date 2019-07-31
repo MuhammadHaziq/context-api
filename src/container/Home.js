@@ -11,8 +11,8 @@ const Home = props => {
     }
   }, []);
 
-  console.log(props.chat.show);
-  console.log(props);
+  // console.log(props.chat.show);
+  // console.log(props);
   return (
     <React.Fragment>
       {props.chat.show == true ? <Message /> : <div>Hello Home</div>}
