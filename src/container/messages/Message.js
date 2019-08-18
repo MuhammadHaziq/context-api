@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -70,3 +71,13 @@ const Message = props => {
   );
 };
 export default withContext(Message);
+=======
+import React, { useEffect, useState } from 'react'
+import withContext from '../../context/ContextHOC.js'
+import * as ACTIONS from '../../actions/chatAction'
+const Message = props => {
+  console.log(props)
+  return <div>{props.context.user.id}</div>
+}
+export default withContext(Message)
+>>>>>>> 9f43d8fce1daa47e52a9143a843900eb77a14b7f
