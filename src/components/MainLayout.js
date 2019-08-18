@@ -30,6 +30,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 import ProfileDialog from "../container/user/ProfileDialog.js";
 import * as ACTIONS from "../actions/authActions.js";
 import Avatar from "@material-ui/core/Avatar";
@@ -154,10 +156,8 @@ const useStyles = makeStyles(theme => ({
   },
   avatar: {
     margin: -4,
-    marginLeft: "10px",
-
-  },
-
+    marginLeft: "10px"
+  }
 }));
 
 const MainLayout = props => {
@@ -403,8 +403,8 @@ const MainLayout = props => {
               style={{
                 justifyContent: "flex-start",
 
-                backgroundColor: '#3f51b5',
-                color:'white'
+                backgroundColor: "#3f51b5",
+                color: "white"
                 // minHeight: "80px"
               }}
             >
@@ -437,12 +437,26 @@ const MainLayout = props => {
               ))}
             </List>
           </Drawer>
-          <main className={classes.content}>
-            <div className={classes.toolbar} />
-            {props.children}
-            <Typography paragraph />
-            <Typography paragraph />
-          </main>
+          <div style={{ width: "100%" }}>
+            <Box
+              display="flex"
+              flexWrap="wrap"
+              alignContent="flex-start"
+              p={1}
+              m={1}
+              bgcolor="background.paper"
+              css={{ maxWidth: "100%", height: "100%" }}
+            >
+              {/* <Grid
+               container
+               direction="row"
+               justify="flex-start"
+               alignItems="flex-end"
+             >*/}
+              <main className={classes.content}>{props.children}</main>
+              {/*</Grid>*/}
+            </Box>
+          </div>
         </div>
         <SnackBarMessages />
       </React.Fragment>
@@ -461,6 +475,8 @@ const MainLayout = props => {
 // );
 
 export default withContext(MainLayout);
+// <div className={classes.toolbar} />
+
 // <div className={classes.toolbar}>
 //   // <IconButton onClick={handleDrawerClose}>
 //   //   {theme.direction === "rtl" ? (
