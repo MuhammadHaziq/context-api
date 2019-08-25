@@ -17,15 +17,15 @@ const Home = props => {
   return (
     <React.Fragment>
       {props.chat.show == true ? (
-        <Grid
-          container
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-end"
-        >
-          <Message />{" "}
-        </Grid>
+        // <Grid
+        //   container
+        //   direction="row"
+        //   justify="flex-start"
+        //   alignItems="flex-end"
+        // >
+        <Message />
       ) : (
+        // </Grid>
         <div>Hello Home</div>
       )}
     </React.Fragment>
