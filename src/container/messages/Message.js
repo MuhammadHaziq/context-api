@@ -14,6 +14,8 @@ import Avatar from "@material-ui/core/Avatar";
 import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/chatAction";
 import { FixedSizeList } from "react-window";
+import Button from "@material-ui/core/Button";
+
 const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
@@ -45,8 +47,16 @@ const useStyles = makeStyles(theme => ({
 const Message = props => {
   const classes = useStyles();
   const [state, setMessage] = useState({
-    message: ""
+    message: "",
+    chats: []
   });
+
+  useEffect(() => {
+    setMessage({
+      ...state,
+      chats: props.chat.message
+    });
+  }, [props.chat.message]);
 
   const handleOnChangeMessage = e => {
     const { name, value } = e.target;
@@ -58,10 +68,14 @@ const Message = props => {
     const data = {
       message: state.message
     };
+    ACTIONS.send_message(data, props.chat.chatDispatch);
     console.log(data);
   };
-  console.log(props);
-  console.log(state.message);
+  // console.logprops;
+  // console.log(props.chat.message);
+  // console.log(state.message);
+  // console.log
+  // (state.chats);
   return (
     <React.Fragment>
       <Grid
@@ -70,13 +84,15 @@ const Message = props => {
         justify="flex-end"
         alignItems="flex-end"
       >
-        <Grid item xs>
-          <List className={classes.root}>
-            <ListItem alignItems="flex-start" button>
-              <ListItemText primary="hello" className={classes.root} />
-            </ListItem>
-          </List>
-        </Grid>
+        {state.chats.map((item, index) => (
+          <Grid item xs>
+            <List className={classes.root}>
+              <ListItem alignItems="flex-start" key={index}>
+                <ListItemText primary={item.message} className={classes.root} />
+              </ListItem>
+            </List>
+          </Grid>
+        ))}
       </Grid>
       <TextField
         fullWidth
@@ -88,6 +104,9 @@ const Message = props => {
         name="message"
         onChange={handleOnChangeMessage}
       />
+      <Button type="button" size="small" color="primary" onClick={submit}>
+        Send
+      </Button>
     </React.Fragment>
   );
 };

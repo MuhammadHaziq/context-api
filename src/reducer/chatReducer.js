@@ -1,4 +1,4 @@
-import { CHAT_OPEN } from "../actions/allActionTypes.js";
+import { CHAT_OPEN, SEND_MESSAGE } from "../actions/allActionTypes.js";
 
 const INITAIL_STATE = {
   show: false,
@@ -15,7 +15,12 @@ const chatReducer = (state = INITAIL_STATE, action) => {
         email: action.response
       };
     }
-
+    case SEND_MESSAGE: {
+      return {
+        ...state,
+        message: [...(state.message || []), action.response]
+      };
+    }
     default: {
       return state;
     }

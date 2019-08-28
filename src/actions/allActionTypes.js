@@ -17,3 +17,4 @@ export const CLOSE_MESSAGE = "CLOSE_MESSAGE";
 // CHAT REDUCER
 
 export const CHAT_OPEN = "CHAT_OPEN";
+export const SEND_MESSAGE = "SEND_MESSAGE";
