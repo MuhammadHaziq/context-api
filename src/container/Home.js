@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import withContext from "../context/ContextHOC.js";
 import * as ACTIONS from "../actions/authActions";
 import Message from "./messages/Message.js";
+import MessageInput from "./MessageInput.js";
 const Home = props => {
   useLayoutEffect(() => {
     if (localStorage.token) {
@@ -23,7 +24,7 @@ const Home = props => {
         //   justify="flex-start"
         //   alignItems="flex-end"
         // >
-        <Message />
+        <MessageInput />
       ) : (
         // </Grid>
         <div>Hello Home</div>

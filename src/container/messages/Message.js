@@ -21,6 +21,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1)
   },
+  bottom: {},
   dense: {
     marginTop: 19
   },
@@ -78,35 +79,55 @@ const Message = props => {
   // (state.chats);
   return (
     <React.Fragment>
+      <Paper style={{ maxHeight: 400, overflow: "auto" }}>
+        <Grid
+          container
+          direction="column"
+          justify="flex-end"
+          alignItems="flex-end"
+          item
+          xs={12}
+          md={12}
+          lg={12}
+        >
+          {state.chats.map((item, index) => (
+            <Grid item xs={12} md={12} lg={12}>
+              <List className={classes.root}>
+                <ListItem alignItems="flex-start" key={index}>
+                  <ListItemText
+                    primary={item.message}
+                    className={classes.root}
+                  />
+                </ListItem>
+              </List>
+            </Grid>
+          ))}
+        </Grid>
+      </Paper>
       <Grid
         container
         direction="column"
         justify="flex-end"
         alignItems="flex-end"
+        item
+        xs={12}
+        md={12}
+        lg={12}
       >
-        {state.chats.map((item, index) => (
-          <Grid item xs>
-            <List className={classes.root}>
-              <ListItem alignItems="flex-start" key={index}>
-                <ListItemText primary={item.message} className={classes.root} />
-              </ListItem>
-            </List>
-          </Grid>
-        ))}
+        <Button type="button" size="small" color="primary" onClick={submit}>
+          Send
+        </Button>
+        <TextField
+          fullWidth
+          id="standard-Message-input"
+          label="Message"
+          className={classes.textField}
+          type="text"
+          margin="normal"
+          name="message"
+          onChange={handleOnChangeMessage}
+        />
       </Grid>
-      <TextField
-        fullWidth
-        id="standard-Message-input"
-        label="Message"
-        className={classes.textField}
-        type="text"
-        margin="normal"
-        name="message"
-        onChange={handleOnChangeMessage}
-      />
-      <Button type="button" size="small" color="primary" onClick={submit}>
-        Send
-      </Button>
     </React.Fragment>
   );
 };

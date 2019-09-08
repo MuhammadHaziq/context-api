@@ -33,8 +33,8 @@ import ProfileDialog from "../container/user/ProfileDialog.js";
 import Avatar from "@material-ui/core/Avatar";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-
-const drawerWidth = 240;
+import MessageInput from "../components/MainLayout.js";
+const drawerWidth = 350;
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -228,9 +228,9 @@ function MainLayout(props) {
         className={classes.toolbar}
         style={{
           justifyContent: "flex-start",
-
           backgroundColor: "#3f51b5",
-          color: "white"
+          color: "white",
+          height: "20px"
           // minHeight: "80px"
         }}
       >

@@ -11,9 +11,9 @@ import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/chatAction";
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 360,
+    overflow: "Hidden",
     whiteSpace: "normal",
-    backgroundColor: theme.palette.background.paper
+    backgroundColor: theme.palette.background.paper,
   },
   inline: {
     display: "inline"
