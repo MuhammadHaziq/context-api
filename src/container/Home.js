@@ -24,7 +24,7 @@ const Home = props => {
         //   justify="flex-start"
         //   alignItems="flex-end"
         // >
-        <MessageInput />
+        <Message />
       ) : (
         // </Grid>
         <div>Hello Home</div>

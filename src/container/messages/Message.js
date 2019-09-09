@@ -15,7 +15,7 @@ import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/chatAction";
 import { FixedSizeList } from "react-window";
 import Button from "@material-ui/core/Button";
-
+import MessageInput from "../MessageInput.js";
 const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
@@ -104,30 +104,7 @@ const Message = props => {
           ))}
         </Grid>
       </Paper>
-      <Grid
-        container
-        direction="column"
-        justify="flex-end"
-        alignItems="flex-end"
-        item
-        xs={12}
-        md={12}
-        lg={12}
-      >
-        <Button type="button" size="small" color="primary" onClick={submit}>
-          Send
-        </Button>
-        <TextField
-          fullWidth
-          id="standard-Message-input"
-          label="Message"
-          className={classes.textField}
-          type="text"
-          margin="normal"
-          name="message"
-          onChange={handleOnChangeMessage}
-        />
-      </Grid>
+      <MessageInput />
     </React.Fragment>
   );
 };

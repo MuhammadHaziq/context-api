@@ -7,12 +7,17 @@ import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
+import Grid from "@material-ui/core/Grid";
+import * as ACTIONS from "../actions/chatAction";
+import withContext from "../context/ContextHOC.js";
+
 const useStyles = makeStyles(theme => ({
   root: {
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
     position: "absolute",
+    width: "67%",
     bottom: 10
   },
   input: {
@@ -33,14 +38,16 @@ const MessageInput = props => {
   const [state, setValues] = useState({
     message: ""
   });
-  const handleChange = name => event => {
-    setValues({ [name]: event.target.value });
+  const handleChange = name => e => {
+    const { name, value } = e.target;
+    setValues({ ...state, [name]: value });
   };
   const handleOnSubmit = e => {
     e.preventDefault();
     const data = {
       message: state.message
     };
+    ACTIONS.send_message(data, props.chat.chatDispatch);
     console.log(state);
   };
   return (
@@ -49,11 +56,10 @@ const MessageInput = props => {
         <InputBase
           fullWidth
           className={classes.input}
-          placeholder="Message"
-          type={"text"}
-          name={"message"}
+          placeholder="Type Message"
+          name="message"
           value={state.message}
-          onChange={handleChange}
+          onChange={handleChange()}
         />
         <IconButton
           className={classes.iconButton}
@@ -67,7 +73,7 @@ const MessageInput = props => {
   );
 };
 
-export default MessageInput;
+export default withContext(MessageInput);
 // autoComplete="email"
 // <Button
 //   type="button"

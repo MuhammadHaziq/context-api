@@ -355,7 +355,7 @@ function MainLayout(props) {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Container maxWidth="lg" className={classes.container}>
-            <Grid item xs={12}>
+            <Grid item xs={12} style={{ backgroundColor: "black" }}>
               {props.children}
             </Grid>
           </Container>
