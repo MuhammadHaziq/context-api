@@ -25,6 +25,8 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import * as ACTIONS from "../actions/authActions.js";
+import * as SEARCH_ACTIONS from "../actions/searchActions.js";
+
 import FriendsList from "../container/friends/FriendsList.js";
 import AuthContext from "../context/AuthContext.js";
 import SnackBarMessages from "./message/SnackBarMessages.js";
@@ -33,7 +35,7 @@ import ProfileDialog from "../container/user/ProfileDialog.js";
 import Avatar from "@material-ui/core/Avatar";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import MessageInput from "../components/MainLayout.js";
+
 const drawerWidth = 350;
 
 const useStyles = makeStyles(theme => ({
@@ -83,6 +85,41 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
+  },
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(3),
+      width: "auto"
+    }
+  },
+  searchIcon: {
+    width: theme.spacing(7),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  inputRoot: {
+    color: "inherit"
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 7),
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: 200
+    }
   }
 }));
 
@@ -90,6 +127,7 @@ function MainLayout(props) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
+  const [search, setSearch] = React.useState({ search: null });
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -157,10 +195,22 @@ function MainLayout(props) {
       image: props.context.userDetail.photoUrl
     });
   }, [!props.context.userDetail]);
+
+  // Search  Action
+  useEffect(() => {
+    const data = {
+      search: search.search
+    };
+    SEARCH_ACTIONS.Serach_User(data);
+  }, [search.search !== null]);
   useEffect(() => {
     // console.log(search.search);
   });
-
+  const searchFriend = e => {
+    const { name, value } = e.target;
+    setSearch({ ...search, [name]: value });
+  };
+  console.log(search);
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -277,9 +327,20 @@ function MainLayout(props) {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap>
-              Responsive drawer
-            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search Friend"
+                name="search"
+                onChange={searchFriend}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+              />
+            </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton aria-label="show 4 new mails" color="inherit">

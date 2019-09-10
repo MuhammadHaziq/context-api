@@ -117,7 +117,7 @@ const ProfileDialog = props => {
     // [props.context.userDetail !== null && props.context.userDetail !== ""]
   );
 
-  console.log(props.context);
+  // console.log(props.context);
 
   return (
     <React.Fragment>

@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
     height: 28,
     margin: 4
   }
-}));
+  }));
 
 const MessageInput = props => {
   const classes = useStyles();

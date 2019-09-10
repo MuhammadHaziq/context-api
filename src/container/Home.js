@@ -13,22 +13,9 @@ const Home = props => {
     }
   }, []);
 
-  // console.log(props.chat.show);
-  // console.log(props);
   return (
     <React.Fragment>
-      {props.chat.show == true ? (
-        // <Grid
-        //   container
-        //   direction="row"
-        //   justify="flex-start"
-        //   alignItems="flex-end"
-        // >
-        <Message />
-      ) : (
-        // </Grid>
-        <div>Hello Home</div>
-      )}
+      {props.chat.show == true ? <Message /> : <div>Hello Home</div>}
     </React.Fragment>
   );
 };
