@@ -18,3 +18,7 @@ export const CLOSE_MESSAGE = "CLOSE_MESSAGE";
 
 export const CHAT_OPEN = "CHAT_OPEN";
 export const SEND_MESSAGE = "SEND_MESSAGE";
+
+// Search Action
+export const SEARCH_RESULT = "SEARCH_RESULT";
+export const CLEAR_SEARCH_RESULT = "CLEAR_SEARCH_RESULT";

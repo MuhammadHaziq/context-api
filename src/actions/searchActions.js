@@ -1,16 +1,23 @@
+import { SEARCH_RESULT, CLEAR_SEARCH_RESULT } from "./allActionTypes.js";
 import axios from "axios";
 import firebase from "../firebase/Firebase.js";
 
-export const Serach_User = data => {
+export const Serach_User = (data, dispatch) => {
   console.log(data.search);
 
   var ref = firebase.database().ref("/users/");
+
   ref
-    .orderByKey()
-    .startAt("3")
-    .endAt("3")
+    .orderByChild("email")
+    .startAt(data.search)
+    // .equalTo(data.search)
     .on("child_added", function(snapshot) {
-      console.log(snapshot.key);
-      console.log(snapshot);
+      // console.log(snapshot.key);
+      console.log(snapshot.val());
     });
+  console.log(ref);
 };
+// .once("value")
+// .then(snapshot => {
+//   console.log(snapshot.val());
+// });

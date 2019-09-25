@@ -1,10 +1,10 @@
-import React from 'react'
-import AuthContext from './AuthContext.js'
-import SnackbarContext from './SnackBarMessage_Context.js'
-import ChatContext from './ChatContext.js'
-import SearchContext from './SearchContext.js'
-export default function withContext (Component) {
-  return function contextComponent (props) {
+import React from "react";
+import AuthContext from "./AuthContext.js";
+import SnackbarContext from "./SnackBarMessage_Context.js";
+import ChatContext from "./ChatContext.js";
+import SearchContext from "./SearchContext.js";
+export default function withContext(Component) {
+  return function contextComponent(props) {
     return (
       <SearchContext.Consumer>
         {searchcontext => (
@@ -29,6 +29,6 @@ export default function withContext (Component) {
           </ChatContext.Consumer>
         )}
       </SearchContext.Consumer>
-    )
-  }
+    );
+  };
 }

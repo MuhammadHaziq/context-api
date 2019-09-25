@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const INITAIL_STATE = {
-  show:false,
-  message:[],
-  email:''
-}
+  show: false,
+  message: [],
+  email: ""
+};
 
-const ChatContext = React.createContext({INITAIL_STATE})
+const ChatContext = React.createContext({ INITAIL_STATE });
 
-export default ChatContext
+export default ChatContext;

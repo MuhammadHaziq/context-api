@@ -198,11 +198,14 @@ function MainLayout(props) {
 
   // Search  Action
   useEffect(() => {
-    const data = {
-      search: search.search
-    };
-    SEARCH_ACTIONS.Serach_User(data);
-  }, [search.search !== null]);
+    if (search.search !== null && search.search !== "") {
+      console.log("hello Search");
+      const data = {
+        search: search.search
+      };
+      SEARCH_ACTIONS.Serach_User(data, props.searchDispatch);
+    }
+  }, [search.search]);
   useEffect(() => {
     // console.log(search.search);
   });
@@ -210,7 +213,7 @@ function MainLayout(props) {
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });
   };
-  console.log(search);
+  console.log(props);
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu

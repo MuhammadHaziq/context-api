@@ -30,8 +30,11 @@ const useStyles = makeStyles(theme => ({
   divider: {
     height: 28,
     margin: 4
+  },
+  rightIcon: {
+    marginLeft: theme.spacing(1)
   }
-  }));
+}));
 
 const MessageInput = props => {
   const classes = useStyles();
@@ -59,6 +62,8 @@ const MessageInput = props => {
           placeholder="Type Message"
           name="message"
           value={state.message}
+          multiline
+          rowsMax="30"
           onChange={handleChange()}
         />
         <IconButton
@@ -66,7 +71,14 @@ const MessageInput = props => {
           onClick={handleOnSubmit}
           aria-label="Message"
         >
-          <SearchIcon />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
         </IconButton>
       </Paper>
     </React.Fragment>
@@ -83,3 +95,8 @@ export default withContext(MessageInput);
 // >
 //   <Icon className={classes.rightIcon}>send</Icon>
 // </Button>
+
+//  <Max length
+// inputProps={{
+//   maxLength: 10
+// }}

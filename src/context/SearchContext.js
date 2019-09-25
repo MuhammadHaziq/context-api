@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const INITAIL_STATE = {
   show: false,
   search: [],
-  email: ''
-}
+  email: ""
+};
 
-const SearchContext = React.createContext({ INITAIL_STATE })
+const SearchContext = React.createContext({ INITAIL_STATE });
 
-export default SearchContext
+export default SearchContext;
