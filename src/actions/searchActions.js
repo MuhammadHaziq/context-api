@@ -12,8 +12,11 @@ export const Serach_User = (data, dispatch) => {
     .startAt(data.search)
     // .equalTo(data.search)
     .on("child_added", function(snapshot) {
-      // console.log(snapshot.key);
       console.log(snapshot.val());
+      dispatch({
+        type:SEARCH_RESULT,
+        response:snapshot.val()
+      })
     });
   console.log(ref);
 };

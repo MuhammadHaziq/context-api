@@ -3,26 +3,25 @@ import {
   SUCCESS_MESSAGE,
   CLOSE_MESSAGE,
   SEARCH_RESULT
-} from "../actions/allActionTypes";
+} from '../actions/allActionTypes'
 
 const INITAIL_STATE = {
   show: false,
   search: [],
-  email: ""
-};
+  email: ''
+}
 const searchReducer = (state = INITAIL_STATE, action) => {
   switch (action.type) {
     case SEARCH_RESULT: {
       return {
         ...state,
-        search: []
-      };
+        search: action.response
+      }
     }
     default:
       return {
         ...state
-      };
-      break;
+      }
   }
-};
-export default searchReducer;
+}
+export default searchReducer

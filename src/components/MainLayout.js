@@ -203,7 +203,7 @@ function MainLayout(props) {
       const data = {
         search: search.search
       };
-      SEARCH_ACTIONS.Serach_User(data, props.searchDispatch);
+      SEARCH_ACTIONS.Serach_User(data, props.search.searchDispatch);
     }
   }, [search.search]);
   useEffect(() => {

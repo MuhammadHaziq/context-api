@@ -19,7 +19,7 @@ export default function withContext(Component) {
                         context={context}
                         message={messageContext}
                         chat={chatcontext}
-                        SEARCH={searchcontext}
+                        search={searchcontext}
                       />
                     )}
                   </AuthContext.Consumer>
