@@ -15,12 +15,12 @@ const searchReducer = (state = INITAIL_STATE, action) => {
     case SEARCH_RESULT: {
       return {
         ...state,
-        search: []
+        search: action.response
       };
     }
     default:
       return {
-        ...state
+        state
       };
       break;
   }

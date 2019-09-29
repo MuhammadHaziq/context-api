@@ -203,7 +203,7 @@ function MainLayout(props) {
       const data = {
         search: search.search
       };
-      SEARCH_ACTIONS.Serach_User(data, props.searchDispatch);
+      SEARCH_ACTIONS.Serach_User(data, props.SEARCH.searchDispatch);
     }
   }, [search.search]);
   useEffect(() => {
@@ -213,7 +213,7 @@ function MainLayout(props) {
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });
   };
-  console.log(props);
+  console.log(props.SEARCH);
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu

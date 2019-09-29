@@ -3,8 +3,6 @@ import axios from "axios";
 import firebase from "../firebase/Firebase.js";
 
 export const Serach_User = (data, dispatch) => {
-  console.log(data.search);
-
   var ref = firebase.database().ref("/users/");
 
   ref
@@ -12,10 +10,12 @@ export const Serach_User = (data, dispatch) => {
     .startAt(data.search)
     // .equalTo(data.search)
     .on("child_added", function(snapshot) {
-      // console.log(snapshot.key);
+      dispatch({
+        type: SEARCH_RESULT,
+        response: snapshot.val()
+      });
       console.log(snapshot.val());
     });
-  console.log(ref);
 };
 // .once("value")
 // .then(snapshot => {
