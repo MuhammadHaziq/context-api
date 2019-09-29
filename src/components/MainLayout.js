@@ -26,7 +26,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import * as ACTIONS from "../actions/authActions.js";
 import * as SEARCH_ACTIONS from "../actions/searchActions.js";
-
+import SearchRequest from "../container/search/SearchRequest.js";
 import FriendsList from "../container/friends/FriendsList.js";
 import AuthContext from "../context/AuthContext.js";
 import SnackBarMessages from "./message/SnackBarMessages.js";
@@ -127,7 +127,10 @@ function MainLayout(props) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();
-  const [search, setSearch] = React.useState({ search: null });
+  const [search, setSearch] = React.useState({
+    search: null,
+    showSearch: false
+  });
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -199,11 +202,14 @@ function MainLayout(props) {
   // Search  Action
   useEffect(() => {
     if (search.search !== null && search.search !== "") {
+      setSearch({ ...search, showSearch: true });
       console.log("hello Search");
       const data = {
         search: search.search
       };
       SEARCH_ACTIONS.Serach_User(data, props.search.searchDispatch);
+    } else {
+      setSearch({ ...search, showSearch: false });
     }
   }, [search.search]);
   useEffect(() => {
@@ -213,7 +219,6 @@ function MainLayout(props) {
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });
   };
-  console.log(props.SEARCH);
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -311,7 +316,7 @@ function MainLayout(props) {
       </div>
 
       <Divider />
-      <FriendsList />
+      {search.showSearch == true ? <SearchRequest /> : <FriendsList />}
     </div>
   );
 
