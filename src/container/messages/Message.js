@@ -67,7 +67,9 @@ const Message = props => {
   const submit = e => {
     e.preventDefault();
     const data = {
-      message: state.message
+      message: state.message,
+      sender_id: props.context.user.id,
+      // Reciver_id
     };
     ACTIONS.send_message(data, props.chat.chatDispatch);
     console.log(data);

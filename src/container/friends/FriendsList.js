@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     overflow: "Hidden",
     whiteSpace: "normal",
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.background.paper
   },
   inline: {
     display: "inline"
@@ -26,62 +26,79 @@ const FriendsList = props => {
     console.log(props);
     ACTIONS.chat_open(email, props.chat.chatDispatch);
   };
+  // const [state, setFriend] = React.useState({ friendList: [] });
+  //
+  // useEffect(() => {
+  //   console.log(props);
+  //   setFriend({
+  //     friendList: props.friends.friendList
+  //   });
+  // }, [!props.friends.friendList]);
+  // console.log([props.friends.friendList]);
+
+  console.log(
+    "state",
+    props.friends.friendList["3GDFAf4E2Xa2EjcKWABSQqKzAzR2"]
+  );
+  console.log("state", props.friends.friendList);
   return (
     <React.Fragment>
-      <List className={classes.root}>
-        <ListItem alignItems="flex-start" button>
-          <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={props.context.userDetail.photoUrl} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={props.context.userDetail.username}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  {props.context.userDetail.email}
-                </Typography>
-                {/*{" — I'll be in your neighborhood doing errands this…"}*/}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <Divider variant="inset" component="li" />
-      </List>
-      <List className={classes.root}>
-        <ListItem
-          alignItems="flex-start"
-          button
-          onClick={() => getFriend(props.context.userDetail.email)}
-        >
-          <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={props.context.userDetail.photoUrl} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={props.context.userDetail.username}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  {props.context.userDetail.email}
-                </Typography>
-                {/*{" — I'll be in your neighborhood doing errands this…"}*/}
-              </React.Fragment>
-            }
-          />
-        </ListItem>
-        <Divider variant="inset" component="li" />
-      </List>
+      {props.friends.friendList.map(item => (
+        <List className={classes.root}>
+          <ListItem alignItems="flex-start" button>
+            <ListItemAvatar>
+              <Avatar alt="Remy Sharp" src={item.photoUrl} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={item.username}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    {item.email}
+                  </Typography>
+                  {/*{" — I'll be in your neighborhood doing errands this…"}*/}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </List>
+      ))}
     </React.Fragment>
   );
 };
 
 export default withContext(FriendsList);
+// <List className={classes.root}>
+//   <ListItem
+//     alignItems="flex-start"
+//     button
+//     onClick={() => getFriend(props.context.userDetail.email)}
+//   >
+//     <ListItemAvatar>
+//       <Avatar alt="Remy Sharp" src={props.context.userDetail.photoUrl} />
+//     </ListItemAvatar>
+//     <ListItemText
+//       primary={props.context.userDetail.username}
+//       secondary={
+//         <React.Fragment>
+//           <Typography
+//             component="span"
+//             variant="body2"
+//             className={classes.inline}
+//             color="textPrimary"
+//           >
+//             {props.context.userDetail.email}
+//           </Typography>
+//           {/*{" — I'll be in your neighborhood doing errands this…"}*/}
+//         </React.Fragment>
+//       }
+//     />
+//   </ListItem>
+//   <Divider variant="inset" component="li" />
+// </List>

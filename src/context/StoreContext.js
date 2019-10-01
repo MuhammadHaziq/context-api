@@ -9,6 +9,8 @@ import chatReducer from "../reducer/chatReducer.js";
 import ChatContext from "./ChatContext.js";
 import searchReducer from "../reducer/searchReducer.js";
 import SearchContext from "./SearchContext.js";
+import FriendContext from "./FriendContext.js";
+import friendReducer from "../reducer/friendReducer.js";
 const StoreContext = props => {
   const INITIAL_STATE = {
     auth: false,
@@ -30,6 +32,9 @@ const StoreContext = props => {
     search: [],
     email: ""
   };
+  const Friend_State = {
+    friendList: []
+  };
   const [state, dispatch] = React.useReducer(authReducer, INITIAL_STATE);
   // if (localStorage.token) {
   //   SetAuthorizeToken(localStorage.token);
@@ -46,7 +51,10 @@ const StoreContext = props => {
   );
 
   const [chatState, chatDispatch] = React.useReducer(chatReducer, Chat_State);
-
+  const [friendstate, friendDispatch] = React.useReducer(
+    friendReducer,
+    Friend_State
+  );
   return (
     <React.Fragment>
       <SearchContext.Provider value={{ ...searchState, searchDispatch }}>
@@ -54,9 +62,11 @@ const StoreContext = props => {
           <SnackbarContext.Provider
             value={{ ...messageState, messageDispatch }}
           >
-            <AuthContext.Provider value={{ ...state, dispatch }}>
-              {props.children}
-            </AuthContext.Provider>
+            <FriendContext.Provider value={{ ...friendstate, friendDispatch }}>
+              <AuthContext.Provider value={{ ...state, dispatch }}>
+                {props.children}
+              </AuthContext.Provider>
+            </FriendContext.Provider>
           </SnackbarContext.Provider>
         </ChatContext.Provider>
       </SearchContext.Provider>

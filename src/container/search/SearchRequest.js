@@ -55,7 +55,6 @@ const SearchRequest = props => {
         </ListItem>
         <Divider variant="inset" component="li" />
       </List>
-      <Divider variant="inset" component="li" />
     </React.Fragment>
   );
 };

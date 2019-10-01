@@ -26,6 +26,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import * as ACTIONS from "../actions/authActions.js";
 import * as SEARCH_ACTIONS from "../actions/searchActions.js";
+import * as FRIEND_ACTIONS from "../actions/friendActions.js";
 import SearchRequest from "../container/search/SearchRequest.js";
 import FriendsList from "../container/friends/FriendsList.js";
 import AuthContext from "../context/AuthContext.js";
@@ -213,8 +214,11 @@ function MainLayout(props) {
     }
   }, [search.search]);
   useEffect(() => {
-    // console.log(search.search);
-  });
+    FRIEND_ACTIONS.get_all_friends(
+      props.friends.friendDispatch,
+      props.message.messageDispatch
+    );
+  }, []);
   const searchFriend = e => {
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });

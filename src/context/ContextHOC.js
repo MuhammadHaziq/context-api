@@ -3,6 +3,7 @@ import AuthContext from "./AuthContext.js";
 import SnackbarContext from "./SnackBarMessage_Context.js";
 import ChatContext from "./ChatContext.js";
 import SearchContext from "./SearchContext.js";
+import FriendContext from "./FriendContext.js";
 export default function withContext(Component) {
   return function contextComponent(props) {
     return (
@@ -12,17 +13,22 @@ export default function withContext(Component) {
             {chatcontext => (
               <SnackbarContext.Consumer>
                 {messageContext => (
-                  <AuthContext.Consumer>
-                    {context => (
-                      <Component
-                        {...props}
-                        context={context}
-                        message={messageContext}
-                        chat={chatcontext}
-                        search={searchcontext}
-                      />
+                  <FriendContext>
+                    {friendContext => (
+                      <AuthContext.Consumer>
+                        {context => (
+                          <Component
+                            {...props}
+                            context={context}
+                            friends={friendContext}
+                            message={messageContext}
+                            chat={chatcontext}
+                            search={searchcontext}
+                          />
+                        )}
+                      </AuthContext.Consumer>
                     )}
-                  </AuthContext.Consumer>
+                  </FriendContext>
                 )}
               </SnackbarContext.Consumer>
             )}
