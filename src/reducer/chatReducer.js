@@ -3,7 +3,7 @@ import { CHAT_OPEN, SEND_MESSAGE } from "../actions/allActionTypes.js";
 const INITAIL_STATE = {
   show: false,
   message: [],
-  email: ""
+  chat_data: ""
 };
 
 const chatReducer = (state = INITAIL_STATE, action) => {
@@ -12,7 +12,7 @@ const chatReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         show: true,
-        email: action.response
+        chat_data: action.response
       };
     }
     case SEND_MESSAGE: {

@@ -22,30 +22,24 @@ const useStyles = makeStyles(theme => ({
 
 const FriendsList = props => {
   const classes = useStyles();
-  const getFriend = email => {
+  const getFriend = data => {
     console.log(props);
-    ACTIONS.chat_open(email, props.chat.chatDispatch);
+    ACTIONS.chat_open(data, props.chat.chatDispatch);
   };
-  // const [state, setFriend] = React.useState({ friendList: [] });
-  //
-  // useEffect(() => {
-  //   console.log(props);
-  //   setFriend({
-  //     friendList: props.friends.friendList
-  //   });
-  // }, [!props.friends.friendList]);
-  // console.log([props.friends.friendList]);
-
-  console.log(
-    "state",
-    props.friends.friendList["3GDFAf4E2Xa2EjcKWABSQqKzAzR2"]
-  );
-  console.log("state", props.friends.friendList);
+  // console.log(
+  //   "state",
+  //   props.friends.friendList["3GDFAf4E2Xa2EjcKWABSQqKzAzR2"]
+  // );
+  // console.log("state", props.friends.friendList);
   return (
     <React.Fragment>
       {props.friends.friendList.map(item => (
         <List className={classes.root}>
-          <ListItem alignItems="flex-start" button>
+          <ListItem
+            alignItems="flex-start"
+            button
+            onClick={() => getFriend({ id: item.key, email: item.email })}
+          >
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src={item.photoUrl} />
             </ListItemAvatar>

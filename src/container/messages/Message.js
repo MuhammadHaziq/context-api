@@ -64,18 +64,19 @@ const Message = props => {
     setMessage({ ...state, [name]: value });
   };
 
-  const submit = e => {
-    e.preventDefault();
-    const data = {
-      message: state.message,
-      sender_id: props.context.user.id,
-      // Reciver_id
-    };
-    ACTIONS.send_message(data, props.chat.chatDispatch);
-    console.log(data);
-  };
+  // const submit = e => {
+//   e.preventDefault();
+//   const dataa = {
+//     message: state.message,
+//     sender_id: props.context.user.id,
+//     Reciver_id: props.chat.chat_data.id
+//   };
+//   ACTIONS.send_message(dataa, props.chat.chatDispatch);
+//   console.log(data);
+// };
+
   // console.logprops;
-  // console.log(props.chat.message);
+  // console.log(props.chat.chat_data.id);
   // console.log(state.message);
   // console.log
   // (state.chats);
