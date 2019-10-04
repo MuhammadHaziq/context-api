@@ -52,7 +52,11 @@ const MessageInput = props => {
       sender_id: props.context.user.id,
       Reciver_id: props.chat.chat_data.id
     };
-    ACTIONS.send_message(data, props.chat.chatDispatch);
+    ACTIONS.send_message(
+      data,
+      props.chat.chatDispatch,
+      props.message.messageDispatch
+    );
     console.log(state);
   };
   return (

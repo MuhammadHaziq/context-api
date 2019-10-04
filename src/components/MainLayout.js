@@ -214,11 +214,15 @@ function MainLayout(props) {
     }
   }, [search.search]);
   useEffect(() => {
+    const data = {
+      user_id: props.context.user.id
+    };
     FRIEND_ACTIONS.get_all_friends(
+      data,
       props.friends.friendDispatch,
       props.message.messageDispatch
     );
-  }, []);
+  }, [props.context.user.id]);
   const searchFriend = e => {
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });

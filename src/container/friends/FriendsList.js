@@ -30,7 +30,7 @@ const FriendsList = props => {
   //   "state",
   //   props.friends.friendList["3GDFAf4E2Xa2EjcKWABSQqKzAzR2"]
   // );
-  // console.log("state", props.friends.friendList);
+  console.log("state", props.friends);
   return (
     <React.Fragment>
       {props.friends.friendList.map(item => (
