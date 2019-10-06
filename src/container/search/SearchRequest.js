@@ -21,40 +21,47 @@ const useStyles = makeStyles(theme => ({
 }));
 const SearchRequest = props => {
   const classes = useStyles();
+  console.log(props);
   const getFriend = email => {
-    console.log(props);
-    // ACTIONS.chat_open(email, props.chat.chatDispatch);
+    ACTIONS.chat_open(email, props.chat.chatDispatch);
   };
   return (
     <React.Fragment>
-      <List className={classes.root}>
-        <ListItem
-          alignItems="flex-start"
-          button
-          // onClick={() => getFriend(props.search.search.email)}
-        >
-          <ListItemAvatar>
-            <Avatar alt="Remy Sharp" src={props.search.search.photoUrl} />
-          </ListItemAvatar>
-          <ListItemText
-            primary={props.search.search.username}
-            secondary={
-              <React.Fragment>
-                <Typography
-                  component="span"
-                  variant="body2"
-                  className={classes.inline}
-                  color="textPrimary"
-                >
-                  {props.search.search.email}
-                </Typography>
-                {/*{" — I'll be in your neighborhood doing errands this…"}*/}
-              </React.Fragment>
+      {props.search.search.map(item => (
+        <List className={classes.root}>
+          <ListItem
+            alignItems="flex-start"
+            button
+            onClick={() =>
+              getFriend({
+                id: item.key,
+                email: item.email
+              })
             }
-          />
-        </ListItem>
-        <Divider variant="inset" component="li" />
-      </List>
+          >
+            <ListItemAvatar>
+              <Avatar alt="Remy Sharp" src={item.photoUrl} />
+            </ListItemAvatar>
+            <ListItemText
+              primary={item.username}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    {item.email}
+                  </Typography>
+                  {/*{" — I'll be in your neighborhood doing errands this…"}*/}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          <Divider variant="inset" component="li" />
+        </List>
+      ))}
     </React.Fragment>
   );
 };

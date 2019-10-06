@@ -24,12 +24,12 @@ const SearchRequest = props => {
   const classes = useStyles();
   const getFriend = email => {
     console.log(props);
-    // ACTIONS.chat_open(email, props.chat.chatDispatch);
+    ACTIONS.chat_open(email, props.chat.chatDispatch);
   };
   return (
     <React.Fragment>
       <List className={classes.root}>
-        <ListItem alignItems="flex-start" button>
+        <ListItem alignItems="flex-start" button
           <ListItemAvatar>
             <Avatar alt="Remy Sharp" src={props.context.userDetail.photoUrl} />
           </ListItemAvatar>

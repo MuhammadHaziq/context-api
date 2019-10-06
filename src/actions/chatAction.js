@@ -46,9 +46,9 @@ const Check_Child_Key_Exist = async (data, messageDispatch) => {
 export const chat_Function = (data, chatDispatch, messageDispatch) => {
   let chatKey;
   if (data.sender_id < data.Reciver_id) {
-    chatKey = data.Reciver_id + data.sender_id;
+    chatKey = data.Reciver_id + "-" + data.sender_id;
   } else {
-    chatKey = data.sender_id + data.Reciver_id;
+    chatKey = data.sender_id + "-" + data.Reciver_id;
   }
   firebase
     .database()
@@ -68,18 +68,21 @@ export const send_message = async (data, chatDispatch, messageDispatch) => {
       .child("friends/")
       .child(data.sender_id)
       .child(data.Reciver_id)
-      .set(true);
+      .set({ status: "pending" });
+    chat_Function(data, chatDispatch, messageDispatch);
   } else {
     console.log("else");
     const dataExist = await Check_Child_Key_Exist(data, messageDispatch);
     if (dataExist == false) {
+      chat_Function(data, chatDispatch, messageDispatch);
     } else {
       //  Add New Friend
       firebase
         .database()
         .ref(`friends/${data.sender_id}`)
         .child(data.Reciver_id)
-        .set(true);
+        .set({ status: "pending" });
+      chat_Function(data, chatDispatch, messageDispatch);
     }
   }
 
