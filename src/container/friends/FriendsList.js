@@ -19,7 +19,6 @@ const useStyles = makeStyles(theme => ({
     display: "inline"
   }
 }));
-
 const FriendsList = props => {
   const classes = useStyles();
   const getFriend = data => {

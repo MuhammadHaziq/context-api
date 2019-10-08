@@ -25,3 +25,4 @@ export const CLEAR_SEARCH_RESULT = "CLEAR_SEARCH_RESULT";
 
 //  Friends Actions
 export const GET_ALL_FRIENDS = "GET_ALL_FRIENDS";
+export const REMOVE_ALL_FRIENDS = "REMOVE_ALL_FRIENDS";

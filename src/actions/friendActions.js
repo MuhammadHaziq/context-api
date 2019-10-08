@@ -1,4 +1,8 @@
-import { GET_ALL_FRIENDS, ERROR_MESSAGE } from "./allActionTypes";
+import {
+  GET_ALL_FRIENDS,
+  REMOVE_ALL_FRIENDS,
+  ERROR_MESSAGE
+} from "./allActionTypes";
 import firebase from "../firebase/Firebase.js";
 
 const snapshotToArray = snapshot => {
@@ -79,4 +83,10 @@ export const get_all_friends = async (data, dispatch, messageDispatch) => {
   //   });
   //   console.log(err);
   // });
+};
+
+export const remove_all_friends = (dispatch, messageDispatch) => {
+  dispatch({
+    type: REMOVE_ALL_FRIENDS
+  });
 };

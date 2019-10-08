@@ -214,6 +214,7 @@ function MainLayout(props) {
     }
   }, [search.search]);
   useEffect(() => {
+    console.log("list", props);
     const data = {
       user_id: props.context.user.id
     };
@@ -223,6 +224,14 @@ function MainLayout(props) {
       props.message.messageDispatch
     );
   }, [props.context.user.id]);
+  useEffect(() => {
+    return () => {
+      FRIEND_ACTIONS.remove_all_friends(
+        props.friends.friendDispatch,
+        props.message.messageDispatch
+      );
+    };
+  });
   const searchFriend = e => {
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });
