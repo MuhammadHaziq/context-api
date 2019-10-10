@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 }));
 const FriendsList = props => {
   const classes = useStyles();
-  const getFriend = data => {
+  const start_chat = data => {
     console.log(props);
     ACTIONS.chat_open(data, props.chat.chatDispatch);
   };
@@ -37,7 +37,13 @@ const FriendsList = props => {
           <ListItem
             alignItems="flex-start"
             button
-            onClick={() => getFriend({ id: item.key, email: item.email })}
+            onClick={() =>
+              start_chat({
+                friend_id: item.key,
+                email: item.email,
+                user_id: props.context.user.id
+              })
+            }
           >
             <ListItemAvatar>
               <Avatar alt="Remy Sharp" src={item.photoUrl} />

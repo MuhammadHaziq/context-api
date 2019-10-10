@@ -224,14 +224,14 @@ function MainLayout(props) {
       props.message.messageDispatch
     );
   }, [props.context.user.id]);
-  useEffect(() => {
-    return () => {
-      FRIEND_ACTIONS.remove_all_friends(
-        props.friends.friendDispatch,
-        props.message.messageDispatch
-      );
-    };
-  });
+  // useEffect(() => {
+  //   return () => {
+  //     FRIEND_ACTIONS.remove_all_friends(
+  //       props.friends.friendDispatch,
+  //       props.message.messageDispatch
+  //     );
+  //   };
+  // });
   const searchFriend = e => {
     const { name, value } = e.target;
     setSearch({ ...search, [name]: value });

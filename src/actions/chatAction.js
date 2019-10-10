@@ -1,12 +1,44 @@
 import { CHAT_OPEN, SEND_MESSAGE, ERROR_MESSAGE } from "./allActionTypes.js";
 import firebase from "../firebase/Firebase.js";
 
+const snapshotToArray = snapshot => {
+  let returnArr = [];
+
+  snapshot.forEach(childSnapshot => {
+    const data = {};
+    console.log(childSnapshot.val());
+    var item = childSnapshot.val();
+    item.key = childSnapshot.key;
+    returnArr.push(item);
+  });
+  return returnArr;
+};
+
 export const chat_open = (data, chatDispatch) => {
   console.log(data);
-  chatDispatch({
-    type: CHAT_OPEN,
-    response: data
-  });
+  let chatKey;
+  if (data.user_id < data.friend_id) {
+    chatKey = data.friend_id + "-" + data.user_id;
+  } else {
+    chatKey = data.user_id + "-" + data.friend_id;
+  }
+  let arrayMessage = [];
+  firebase
+    .database()
+    .ref("/chat/")
+    .child(chatKey)
+    .on("value", snapshot => {
+      console.log(snapshotToArray(snapshot));
+      chatDispatch({
+        type: CHAT_OPEN,
+        response: snapshotToArray(snapshot),
+        data:data
+      });
+    });
+  // chatDispatch({
+  //   type: CHAT_OPEN,
+  //   response: data
+  // });
 };
 
 const Check_Child_Exist = async messageDispatch => {

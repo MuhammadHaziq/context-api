@@ -12,13 +12,14 @@ const chatReducer = (state = INITAIL_STATE, action) => {
       return {
         ...state,
         show: true,
-        chat_data: action.response
+        chat_data: action.data,
+        message: action.response
       };
     }
     case SEND_MESSAGE: {
       return {
-        ...state,
-        message: [...(state.message || []), action.response]
+        ...state
+        // message: [...(state.message || []), action.response]
       };
     }
     default: {

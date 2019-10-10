@@ -50,7 +50,7 @@ const MessageInput = props => {
     const data = {
       message: state.message,
       sender_id: props.context.user.id,
-      Reciver_id: props.chat.chat_data.id
+      Reciver_id: props.chat.chat_data.friend_id
     };
     ACTIONS.send_message(
       data,
