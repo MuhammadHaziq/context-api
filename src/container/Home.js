@@ -15,7 +15,11 @@ const Home = props => {
 
   return (
     <React.Fragment>
-      {props.chat.show == true ? <Message /> : <div>Hello Home</div>}
+      {props.chat.show == true ? (
+        <Message />
+      ) : (
+        <div>Hello {props.context.userDetail.username}</div>
+      )}
     </React.Fragment>
   );
 };

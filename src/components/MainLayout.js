@@ -285,21 +285,6 @@ function MainLayout(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      // <MenuItem>
-      //   <IconButton color="inherit">
-      //     <Badge badgeContent={4} color="secondary">
-      //       <MailIcon />
-      //     </Badge>
-      //   </IconButton>
-      //   <p>Messages</p>
-      // </MenuItem>
-      // <MenuItem>//   <IconButton color="inherit">
-//     <Badge badgeContent={11} color="secondary">
-//       <NotificationsIcon />
-//     </Badge>
-//   </IconButton>
-//   <p>Notifications</p>
-// </MenuItem>
 
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
@@ -384,19 +369,7 @@ function MainLayout(props) {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-              <IconButton aria-label="show 4 new mails" color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-              >
-                <Badge badgeContent={17} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
+
               <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -457,7 +430,7 @@ function MainLayout(props) {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Container maxWidth="lg" className={classes.container}>
-            <Grid item xs={12} style={{ backgroundColor: "black" }}>
+            <Grid item xs={12}>
               {props.children}
             </Grid>
           </Container>
@@ -484,3 +457,46 @@ MainLayout.propTypes = {
 };
 
 export default withContext(MainLayout);
+//{" "}
+// <MenuItem>//   //{" "}
+//   <IconButton color="inherit">
+//     //{" "}
+//     <Badge badgeContent={4} color="secondary">
+//       // <MailIcon />
+//       //{" "}
+//     </Badge>
+//     //{" "}
+//   </IconButton>
+//   // <p>Messages</p>
+//   //{" "}
+// </MenuItem>
+// //{" "}
+// <MenuItem>
+//   //{" "}
+//   <IconButton color="inherit">
+//     //{" "}
+//     <Badge badgeContent={11} color="secondary">
+//       // <NotificationsIcon />
+//       //{" "}
+//     </Badge>
+//     //{" "}
+//   </IconButton>
+//   // <p>Notifications</p>
+//   //{" "}
+// </MenuItem>
+
+// Desktop View
+
+// <IconButton aria-label="show 4 new mails" color="inherit">
+//   <Badge badgeContent={4} color="secondary">
+//     <MailIcon />
+//   </Badge>
+// </IconButton>
+// <IconButton
+//   aria-label="show 17 new notifications"
+//   color="inherit"
+// >
+//   <Badge badgeContent={17} color="secondary">
+//     <NotificationsIcon />
+//   </Badge>
+// </IconButton>
