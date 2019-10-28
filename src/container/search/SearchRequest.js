@@ -34,8 +34,9 @@ const SearchRequest = props => {
             button
             onClick={() =>
               getFriend({
-                id: item.key,
-                email: item.email
+                friend_id: item.key,
+                email: item.email,
+                user_id: props.context.user.id
               })
             }
           >

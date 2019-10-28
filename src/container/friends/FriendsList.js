@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 const FriendsList = props => {
   const classes = useStyles();
   const start_chat = data => {
-    console.log(props);
+    console.log(data);
     ACTIONS.chat_open(data, props.chat.chatDispatch);
   };
   // console.log(

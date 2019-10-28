@@ -22,6 +22,9 @@ export const chat_open = (data, chatDispatch) => {
   } else {
     chatKey = data.user_id + "-" + data.friend_id;
   }
+  // if (chatKey == "") {
+  //   chatKey = data.id;
+  // }
   let arrayMessage = [];
   firebase
     .database()
@@ -29,11 +32,19 @@ export const chat_open = (data, chatDispatch) => {
     .child(chatKey)
     .on("value", snapshot => {
       console.log(snapshotToArray(snapshot));
-      chatDispatch({
-        type: CHAT_OPEN,
-        response: snapshotToArray(snapshot),
-        data:data
-      });
+      if (!snapshot.exists()) {
+        chatDispatch({
+          type: CHAT_OPEN,
+          response: [data],
+          data: data
+        });
+      } else {
+        chatDispatch({
+          type: CHAT_OPEN,
+          response: snapshotToArray(snapshot),
+          data: data
+        });
+      }
     });
   // chatDispatch({
   //   type: CHAT_OPEN,
@@ -108,6 +119,7 @@ export const chat_Function = (data, chatDispatch, messageDispatch) => {
 };
 
 export const send_message = async (data, chatDispatch, messageDispatch) => {
+  console.log("data", data);
   const childExist = await Check_Child_Exist(messageDispatch);
   if (childExist == false) {
     console.log("if");

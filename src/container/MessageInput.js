@@ -10,7 +10,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 import * as ACTIONS from "../actions/chatAction";
 import withContext from "../context/ContextHOC.js";
-
 const useStyles = makeStyles(theme => ({
   root: {
     padding: "2px 4px",
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     flex: 1
   },
   iconButton: {
-    padding: 10
+    // padding: 10
   },
   divider: {
     height: 28,
@@ -57,6 +56,7 @@ const MessageInput = props => {
       props.chat.chatDispatch,
       props.message.messageDispatch
     );
+    setValues({ ...state, message: "" });
     console.log(state);
   };
   return (
@@ -73,8 +73,8 @@ const MessageInput = props => {
           onChange={handleChange()}
         />
         <IconButton
-          className={classes.iconButton}
           onClick={handleOnSubmit}
+          className={classes.iconButton}
           aria-label="Message"
         >
           <svg

@@ -175,6 +175,14 @@ function MainLayout(props) {
   };
   const handleCloseProfile = () => {
     setOpen({ ...state, openProfile: false });
+    const data = {
+      id: props.context.user.id
+    };
+    ACTIONS.get_User_Current_Detail(
+      data,
+      props.context.dispatch,
+      props.message.messageDispatch
+    );
   };
 
   useEffect(() => {
@@ -210,6 +218,14 @@ function MainLayout(props) {
       };
       SEARCH_ACTIONS.Serach_User(data, props.search.searchDispatch);
     } else {
+      const data = {
+        user_id: props.context.user.id
+      };
+      FRIEND_ACTIONS.get_all_friends(
+        data,
+        props.friends.friendDispatch,
+        props.message.messageDispatch
+      );
       setSearch({ ...search, showSearch: false });
     }
   }, [search.search]);
@@ -269,22 +285,22 @@ function MainLayout(props) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      // <MenuItem>
+      //   <IconButton color="inherit">
+      //     <Badge badgeContent={4} color="secondary">
+      //       <MailIcon />
+      //     </Badge>
+      //   </IconButton>
+      //   <p>Messages</p>
+      // </MenuItem>
+      // <MenuItem>//   <IconButton color="inherit">
+//     <Badge badgeContent={11} color="secondary">
+//       <NotificationsIcon />
+//     </Badge>
+//   </IconButton>
+//   <p>Notifications</p>
+// </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton color="inherit">
           <AccountCircle />
@@ -294,7 +310,7 @@ function MainLayout(props) {
     </Menu>
   );
   if (props.context.loader == true) {
-    return "Hello";
+    // return "Hello";
   }
 
   const drawer = (
