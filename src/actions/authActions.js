@@ -8,40 +8,40 @@ import {
   UPDATE_USER_PROFILE,
   CURRENT_USER_DETAIL,
   LOADER
-} from "./allActionTypes.js";
-import firebase from "../firebase/Firebase.js";
-import jwt from "jsonwebtoken";
-import SetAuthorizeToken from "../utile/SetAuthorizeToken.js";
+} from './allActionTypes.js'
+import firebase from '../firebase/Firebase.js'
+import jwt from 'jsonwebtoken'
+import SetAuthorizeToken from '../utile/SetAuthorizeToken.js'
 
 export const setCurrentUser = async (dispatch, token) => {
-  const data = await jwt.decode(token);
+  const data = await jwt.decode(token)
   // console.log(data);
   dispatch({
     type: LOGIN_SUCCESS,
     response: data
-  });
+  })
 
   dispatch({
     type: LOADER,
     response: false
-  });
-};
+  })
+}
 
 export const setCurrentSignUpUser = async (dispatch, token) => {
-  const data = await jwt.decode(token);
+  const data = await jwt.decode(token)
   dispatch({
     type: SIGNUP_SUCCESS,
     response: data
-  });
-};
+  })
+}
 export const SetCurrentUser = token => {
-  const data = jwt.decode(token);
+  const data = jwt.decode(token)
   // console.log(data);
   return {
     type: LOGIN_SUCCESS,
     response: data
-  };
-};
+  }
+}
 
 // export const genrateToken = async data => {
 //   const token = await jwt.sign(data, "MY_SECRET_KEY", { expiresIn: "1d" });
@@ -59,17 +59,17 @@ export const Login = async (dispatch, email, password, messageDispatch) => {
         dispatch({
           type: LOADER,
           response: true
-        });
+        })
         const data = {
           id: response.user.uid,
           email: response.user.email
-        };
-        const token = jwt.sign(data, "MY_SECRET_KEY", { expiresIn: "1d" });
+        }
+        const token = jwt.sign(data, 'MY_SECRET_KEY', { expiresIn: '1d' })
         // const token = genrateToken(data);
         // console.log(token);
-        setCurrentUser(dispatch, token);
-        localStorage.setItem("token", token);
-        SetAuthorizeToken(token);
+        setCurrentUser(dispatch, token)
+        localStorage.setItem('token', token)
+        SetAuthorizeToken(token)
 
         // props.location.replace("/home");
       })
@@ -77,13 +77,13 @@ export const Login = async (dispatch, email, password, messageDispatch) => {
         messageDispatch({
           type: ERROR_MESSAGE,
           response: error.message
-        });
+        })
         // console.log(error.message);
-      });
+      })
   } catch (err) {
-    console.log(err);
+    console.log(err)
   }
-};
+}
 
 export const signup = async (dispatch, email, password, messageDispatch) => {
   try {
@@ -94,11 +94,29 @@ export const signup = async (dispatch, email, password, messageDispatch) => {
         const data = {
           id: response.user.uid,
           email: response.user.email
-        };
-        const token = jwt.sign(data, "MY_SECRET_KEY", { expiresIn: "1d" });
-        setCurrentSignUpUser(dispatch, token);
-        localStorage.setItem("token", token);
-        SetAuthorizeToken(token);
+        }
+        const token = jwt.sign(data, 'MY_SECRET_KEY', { expiresIn: '1d' })
+        setCurrentSignUpUser(dispatch, token)
+        localStorage.setItem('token', token)
+        SetAuthorizeToken(token)
+        firebase
+          .database()
+          .ref('users/' + response.user.uid)
+          .set({
+            email: email
+          })
+          .then(response => {
+            messageDispatch({
+              type: SUCCESS_MESSAGE,
+              response: 'User Created'
+            })
+          })
+          .catch(err => {
+            messageDispatch({
+              type: ERROR_MESSAGE,
+              response: err.message
+            })
+          })
         // return { status: true, response: response.message };
         // console.log(response);
       })
@@ -109,107 +127,107 @@ export const signup = async (dispatch, email, password, messageDispatch) => {
         messageDispatch({
           type: ERROR_MESSAGE,
           response: error.message
-        });
+        })
         // return { status: false, response: error.message };
 
         // ...
-      });
+      })
   } catch (err) {
     messageDispatch({
       type: ERROR_MESSAGE,
       response: err.message
-    });
+    })
   }
-};
+}
 
 export const Logout = async (dispatch, messageDispatch) => {
-  console.log(dispatch, messageDispatch);
+  console.log(dispatch, messageDispatch)
   try {
     const res = await firebase
       .auth()
       .signOut()
       .then(response => {
-        localStorage.removeItem("token");
+        localStorage.removeItem('token')
         dispatch({
           type: LOGOUT_SUCCESS
-        });
+        })
       })
       .catch(err => {
         messageDispatch({
           type: ERROR_MESSAGE,
           response: err.message
-        });
-      });
+        })
+      })
   } catch (err) {
     messageDispatch({
       type: ERROR_MESSAGE,
       response: err.message
-    });
+    })
   }
-};
+}
 
 export const get_User_Current_Detail = (data, dispatch, messageDispatch) => {
   try {
-    const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser
     // console.log(user);
     dispatch({
       type: LOADER,
       response: true
-    });
+    })
     firebase
       .database()
-      .ref("/users/" + data.id)
-      .once("value")
+      .ref('/users/' + data.id)
+      .once('value')
       .then(snapshot => {
-        console.log(snapshot.val());
+        console.log(snapshot.val())
         dispatch({
           type: LOADER,
           response: false
-        });
+        })
         if (snapshot.val() == null) {
-          dispatch({ type: CURRENT_USER_DETAIL, response: "" });
+          dispatch({ type: CURRENT_USER_DETAIL, response: '' })
         } else {
-          dispatch({ type: CURRENT_USER_DETAIL, response: snapshot.val() });
+          dispatch({ type: CURRENT_USER_DETAIL, response: snapshot.val() })
         }
       })
       .catch(err => {
         messageDispatch({
           type: ERROR_MESSAGE,
           response: err.message
-        });
-      });
+        })
+      })
   } catch (err) {
     messageDispatch({
       type: ERROR_MESSAGE,
       response: err.message
-    });
+    })
   }
-};
+}
 export const get_User_Detail = (data, dispatch, messageDispatch) => {
   try {
-    const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser
     // console.log(user);
     firebase
       .database()
-      .ref("/users/" + user.uid)
-      .once("value")
+      .ref('/users/' + user.uid)
+      .once('value')
       .then(snapshot => {
         if (snapshot.val() === null) {
-          const value = "not exist";
-          updateFunctionProfile(data, dispatch, messageDispatch, value);
+          const value = 'not exist'
+          updateFunctionProfile(data, dispatch, messageDispatch, value)
         } else {
-          const value = "exist";
-          updateFunctionProfile(data, dispatch, messageDispatch, value);
+          const value = 'exist'
+          updateFunctionProfile(data, dispatch, messageDispatch, value)
         }
-        console.log(snapshot.val());
-      });
+        console.log(snapshot.val())
+      })
   } catch (err) {
     messageDispatch({
       type: ERROR_MESSAGE,
       response: err.message
-    });
+    })
   }
-};
+}
 
 export const updateFunctionProfile = (
   data,
@@ -217,8 +235,8 @@ export const updateFunctionProfile = (
   messageDispatch,
   value
 ) => {
-  console.log(data);
-  const user = firebase.auth().currentUser;
+  console.log(data)
+  const user = firebase.auth().currentUser
   user
     .updateProfile({
       displayName: data.name,
@@ -228,10 +246,10 @@ export const updateFunctionProfile = (
     .then(response => {
       // Update successful.
       //  Search Data Exist or not
-      if (value == "exist") {
+      if (value == 'exist') {
         firebase
           .database()
-          .ref("users/" + user.uid)
+          .ref('users/' + user.uid)
           .set({
             username: data.name,
             email: data.email,
@@ -242,19 +260,19 @@ export const updateFunctionProfile = (
           .then(response => {
             messageDispatch({
               type: SUCCESS_MESSAGE,
-              response: "Profile Update SuccessFully"
-            });
+              response: 'Profile Update SuccessFully'
+            })
           })
           .catch(err => {
             messageDispatch({
               type: ERROR_MESSAGE,
               response: err.message
-            });
-          });
+            })
+          })
       } else {
         firebase
           .database()
-          .ref("users/" + user.uid)
+          .ref('users/' + user.uid)
           .update({
             username: data.name,
             email: data.email,
@@ -265,15 +283,15 @@ export const updateFunctionProfile = (
           .then(response => {
             messageDispatch({
               type: SUCCESS_MESSAGE,
-              response: "Profile Update SuccessFully"
-            });
+              response: 'Profile Update SuccessFully'
+            })
           })
           .catch(err => {
             messageDispatch({
               type: ERROR_MESSAGE,
               response: err.message
-            });
-          });
+            })
+          })
       }
 
       // console.log(response);
@@ -283,32 +301,32 @@ export const updateFunctionProfile = (
       messageDispatch({
         type: ERROR_MESSAGE,
         response: err.message
-      });
-    });
+      })
+    })
   // ...
-};
+}
 export const updateProfile = (data, dispatch, messageDispatch) => {
   try {
-    const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser
     // console.log(user);
     firebase
       .database()
-      .ref("/users/" + user.uid)
-      .once("value")
+      .ref('/users/' + user.uid)
+      .once('value')
       .then(snapshot => {
         if (snapshot.val() === null) {
-          const value = "not exist";
-          updateFunctionProfile(data, dispatch, messageDispatch, value);
+          const value = 'not exist'
+          updateFunctionProfile(data, dispatch, messageDispatch, value)
         } else {
-          const value = "exist";
-          updateFunctionProfile(data, dispatch, messageDispatch, value);
+          const value = 'exist'
+          updateFunctionProfile(data, dispatch, messageDispatch, value)
         }
-        console.log(snapshot.val());
-      });
+        console.log(snapshot.val())
+      })
   } catch (err) {
     messageDispatch({
       type: ERROR_MESSAGE,
       response: err.message
-    });
+    })
   }
-};
+}
