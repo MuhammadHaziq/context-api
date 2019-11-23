@@ -49,6 +49,8 @@ export const get_all_friends = async (data, dispatch, messageDispatch) => {
     .ref('/friends/' + data.user_id)
     .once('value')
     .then(snapshot => {
+      $.LoadingOverlay("hide");
+
       console.log(Object.keys(snapshot.val() || {}))
       const keys = Object.keys(snapshot.val() || {})
       // console.log(keys.map(item => item));
@@ -70,6 +72,8 @@ export const get_all_friends = async (data, dispatch, messageDispatch) => {
       })
     })
     .catch(err => {
+      $.LoadingOverlay("hide");
+
       messageDispatch({
         type: ERROR_MESSAGE,
         response: err.message

@@ -299,6 +299,8 @@ export const updateFunctionProfile = (
             photoUrl: data.image
           })
           .then(response => {
+            $.LoadingOverlay("hide");
+
             messageDispatch({
               type: SUCCESS_MESSAGE,
               response: 'Profile Update SuccessFully'
