@@ -1,5 +1,7 @@
 import { CHAT_OPEN, SEND_MESSAGE, ERROR_MESSAGE } from "./allActionTypes.js";
 import firebase from "../firebase/Firebase.js";
+import $ from "jquery";
+import "gasparesganga-jquery-loading-overlay";
 
 const snapshotToArray = snapshot => {
   let returnArr = [];
@@ -16,6 +18,8 @@ const snapshotToArray = snapshot => {
 
 export const chat_open = (data, chatDispatch) => {
   console.log(data);
+  $.LoadingOverlay("show");
+
   let chatKey;
   if (data.user_id < data.friend_id) {
     chatKey = data.friend_id + "-" + data.user_id;
@@ -31,6 +35,8 @@ export const chat_open = (data, chatDispatch) => {
     .ref("/chat/")
     .child(chatKey)
     .on("value", snapshot => {
+      $.LoadingOverlay("hide");
+
       console.log(snapshotToArray(snapshot));
       if (!snapshot.exists()) {
         chatDispatch({
@@ -53,15 +59,20 @@ export const chat_open = (data, chatDispatch) => {
 };
 
 const Check_Child_Exist = async messageDispatch => {
+  $.LoadingOverlay("show");
+
   await firebase
     .database()
     .ref("/friends/")
     .once("value")
     .then(snapshot => {
+      $.LoadingOverlay("hide");
+
       console.log(snapshot.exists());
       return snapshot.exists();
     })
     .catch(err => {
+      $.LoadingOverlay("hide");
       messageDispatch({
         type: ERROR_MESSAGE,
         response: err.message
@@ -70,16 +81,19 @@ const Check_Child_Exist = async messageDispatch => {
 };
 
 const Check_Child_Key_Exist = async (data, messageDispatch) => {
+  $.LoadingOverlay("show");
   await firebase
     .database()
     .ref("/friends/")
     .child(data.sender_id)
     .once("value")
     .then(snapshot => {
+      $.LoadingOverlay("hide");
       console.log(snapshot.val() == data.Reciver_id);
       return snapshot.val() == data.Reciver_id;
     })
     .catch(err => {
+      $.LoadingOverlay("hide");
       messageDispatch({
         type: ERROR_MESSAGE,
         response: err.message
@@ -88,16 +102,19 @@ const Check_Child_Key_Exist = async (data, messageDispatch) => {
 };
 
 const Check_Reciver_Child_Key_Exist = async (data, messageDispatch) => {
+  $.LoadingOverlay("show");
   await firebase
     .database()
     .ref("/friends/")
     .child(data.Reciver_id)
     .once("value")
     .then(snapshot => {
+      $.LoadingOverlay("hide");
       console.log(snapshot.val() == data.sender_id);
       return snapshot.val() == data.sender_id;
     })
     .catch(err => {
+      $.LoadingOverlay("hide");
       messageDispatch({
         type: ERROR_MESSAGE,
         response: err.message
@@ -105,7 +122,7 @@ const Check_Reciver_Child_Key_Exist = async (data, messageDispatch) => {
     });
 };
 export const chat_Function = (data, chatDispatch, messageDispatch) => {
-  let chatKey;
+    let chatKey;
   if (data.sender_id < data.Reciver_id) {
     chatKey = data.Reciver_id + "-" + data.sender_id;
   } else {
@@ -120,6 +137,7 @@ export const chat_Function = (data, chatDispatch, messageDispatch) => {
 
 export const send_message = async (data, chatDispatch, messageDispatch) => {
   console.log("data", data);
+
   const childExist = await Check_Child_Exist(messageDispatch);
   if (childExist == false) {
     console.log("if");

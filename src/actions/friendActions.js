@@ -4,6 +4,8 @@ import {
   ERROR_MESSAGE
 } from "./allActionTypes";
 import firebase from "../firebase/Firebase.js";
+import $ from "jquery";
+import "gasparesganga-jquery-loading-overlay";
 
 const snapshotToArray = snapshot => {
   let returnArr = [];
@@ -18,7 +20,7 @@ const snapshotToArray = snapshot => {
   return returnArr;
 };
 const get_friend_ids = (data, messageDispatch) => {
-  console.log(data.user_id);
+  // console.log(data.user_id);
   const friendKeys = firebase
     .database()
     .ref("/friends/" + data.user_id)
@@ -38,6 +40,7 @@ const get_friend_ids = (data, messageDispatch) => {
 export const get_all_friends = async (data, dispatch, messageDispatch) => {
   // const friend_list = await get_friend_ids(data, messageDispatch);
   // console.log(friend_list);
+  $.LoadingOverlay("show");
   let returnArr = [];
   firebase
     .database()
@@ -55,6 +58,8 @@ export const get_all_friends = async (data, dispatch, messageDispatch) => {
             var item = snapshot.val();
             item.key = snapshot.key;
             returnArr.push(item);
+            $.LoadingOverlay("hide");
+
             dispatch({
               type: GET_ALL_FRIENDS,
               response: returnArr

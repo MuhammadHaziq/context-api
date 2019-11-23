@@ -13,7 +13,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import withContext from "../../context/ContextHOC.js";
 import * as ACTIONS from "../../actions/chatAction";
-import { FixedSizeList } from "react-window";
 import Button from "@material-ui/core/Button";
 import MessageInput from "../MessageInput.js";
 const useStyles = makeStyles(theme => ({
