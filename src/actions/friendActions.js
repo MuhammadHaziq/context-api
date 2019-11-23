@@ -8,47 +8,49 @@ import $ from "jquery";
 import "gasparesganga-jquery-loading-overlay";
 
 const snapshotToArray = snapshot => {
-  let returnArr = [];
+  let returnArr = []
 
   snapshot.forEach(childSnapshot => {
-    const data = {};
-    console.log(childSnapshot.val());
-    var item = childSnapshot.val();
-    item.key = childSnapshot.key;
-    returnArr.push(item);
-  });
-  return returnArr;
-};
+    const data = {}
+    console.log(childSnapshot.val())
+    var item = childSnapshot.val()
+    item.key = childSnapshot.key
+    returnArr.push(item)
+  })
+  return returnArr
+}
 const get_friend_ids = (data, messageDispatch) => {
   // console.log(data.user_id);
+  console.log(data.user_id)
   const friendKeys = firebase
     .database()
-    .ref("/friends/" + data.user_id)
-    .once("value")
+    .ref('/friends/' + data.user_id)
+    .once('value')
     .then(snapshot => {
-      console.log(snapshot.val());
-      return snapshot.val();
+      console.log(snapshot.val())
+      return snapshot.val()
     })
     .catch(err => {
       messageDispatch({
         type: ERROR_MESSAGE,
         response: err.message
-      });
-    });
-};
+      })
+    })
+}
 
 export const get_all_friends = async (data, dispatch, messageDispatch) => {
   // const friend_list = await get_friend_ids(data, messageDispatch);
   // console.log(friend_list);
   $.LoadingOverlay("show");
   let returnArr = [];
+
   firebase
     .database()
-    .ref("/friends/" + data.user_id)
-    .once("value")
+    .ref('/friends/' + data.user_id)
+    .once('value')
     .then(snapshot => {
-      console.log(Object.keys(snapshot.val() || {}));
-      const keys = Object.keys(snapshot.val() || {});
+      console.log(Object.keys(snapshot.val() || {}))
+      const keys = Object.keys(snapshot.val() || {})
       // console.log(keys.map(item => item));
       keys.map(snapChild => {
         firebase
@@ -63,16 +65,16 @@ export const get_all_friends = async (data, dispatch, messageDispatch) => {
             dispatch({
               type: GET_ALL_FRIENDS,
               response: returnArr
-            });
-          });
-      });
+            })
+          })
+      })
     })
     .catch(err => {
       messageDispatch({
         type: ERROR_MESSAGE,
         response: err.message
-      });
-    });
+      })
+    })
   // const friends
   // .then(snapshot => {
   //   console.log(snapshot.val());
@@ -88,10 +90,10 @@ export const get_all_friends = async (data, dispatch, messageDispatch) => {
   //   });
   //   console.log(err);
   // });
-};
+}
 
 export const remove_all_friends = (dispatch, messageDispatch) => {
   dispatch({
     type: REMOVE_ALL_FRIENDS
-  });
-};
+  })
+}
