@@ -10,7 +10,7 @@
     "@material-ui/core": "^4.0.0-alpha.8",
     "@material-ui/icons": "^4.0.0-alpha.8",
     "@material-ui/styles": "^3.0.0-alpha.10",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "clsx": "^1.0.4",
     "date-fns": "^2.0.0-alpha.31",
     "dateformat": "^3.0.3",
