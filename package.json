@@ -22,7 +22,7 @@
     "gasparesganga-jquery-loading-overlay": "^2.1.6",
     "http2": "^3.3.7",
     "jquery": "^3.4.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "luxon": "^1.16.0",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
